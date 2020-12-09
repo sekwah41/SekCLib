@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+issueTrackerURL="https://github.com/sekwah41/Naruto-Mod/issues"
+license="MIT"
+[[mods]]
+    modId="sekclib"
+    version="${file.jarVersion}"
+    displayName="SekC Lib"
+    updateJSONURL="https://www.sekwah.com/modversions/sekclib.json"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/sekclib"
+    authors="Sekwah41"
+    description='''
+A library mod used mostly for Sekwah41's mods used for animation and physics.
+'''
+
+[[dependencies.sekclib]]
+    modId="forge"
+    mandatory=true
+    versionRange="[35,)"
+    ordering="NONE"
+    side="BOTH"
+
+# https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html
+[[dependencies.sekclib]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.1,)"
+    ordering="NONE"
+    side="BOTH"

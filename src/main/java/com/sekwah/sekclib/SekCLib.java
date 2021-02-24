@@ -1,5 +1,6 @@
 package com.sekwah.sekclib;
 
+import com.sekwah.sekclib.network.PacketHandler;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -21,7 +22,6 @@ public class SekCLib {
 
         ModLoadingContext loadingContext = ModLoadingContext.get();
 
-
     }
 
 
@@ -29,7 +29,7 @@ public class SekCLib {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-
+        PacketHandler.init();
     }
 
     @SubscribeEvent

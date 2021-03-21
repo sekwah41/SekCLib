@@ -1,6 +1,6 @@
 package com.sekwah.sekclib.network;
 import com.sekwah.sekclib.SekCLib;
-import com.sekwah.sekclib.network.s2c.ClientUpdateCustomData;
+import com.sekwah.sekclib.network.s2c.ServerUpdateCustomData;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -19,7 +19,7 @@ public class PacketHandler {
             .simpleChannel();
 
     public static void init() {
-        SYNC_CHANNEL.registerMessage(0, ClientUpdateCustomData.class, ClientUpdateCustomData::encode, ClientUpdateCustomData::decode, ClientUpdateCustomData.Handler::handle);
+        SYNC_CHANNEL.registerMessage(0, ServerUpdateCustomData.class, ServerUpdateCustomData::encode, ServerUpdateCustomData::decode, ServerUpdateCustomData.Handler::handle);
     }
 
     public static void sendToPlayer(Object obj, ServerPlayerEntity player) {

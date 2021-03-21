@@ -1,11 +1,13 @@
 package com.sekwah.sekclib.network.datamanager;
 
 import com.google.common.collect.Maps;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.EntityDataManager;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Similar data and info to {@link EntityDataManager} however repurposed so it can work for a lot more than just entities.
+ *
  * @param <T>
  */
 public abstract class CustomDataTracker<T> {
@@ -48,6 +51,9 @@ public abstract class CustomDataTracker<T> {
     public int updateRate = 5;
 
     private int ticksToNextUpdate = 0;
+
+    public CustomDataTracker() {
+    }
 
     public CustomDataTracker<T> setUpdateRate(int updateRate) {
         this.updateRate = updateRate;

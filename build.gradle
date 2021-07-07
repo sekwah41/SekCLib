@@ -10,7 +10,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
         classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
-        classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
+        classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
     }
 }
 

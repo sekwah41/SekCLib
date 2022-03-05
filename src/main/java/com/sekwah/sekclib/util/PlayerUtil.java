@@ -1,4 +1,4 @@
-package com.sekwah.sekclib.player;
+package com.sekwah.sekclib.util;
 import com.sekwah.sekclib.network.SekCPacketHandler;
 import com.sekwah.sekclib.network.s2c.ClientVelocityPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -35,11 +35,11 @@ public class PlayerUtil {
     /**
      * Another way to call {@link PlayerUtil#setVelocity(Player, Vec3, boolean)}
      *
-     * @param player
-     * @param x
-     * @param y
-     * @param z
-     * @param ignoreGround
+     * @param player effected player
+     * @param x x velocity
+     * @param y y velocity
+     * @param z z velocity
+     * @param ignoreGround if the client should ignore the ground when the velocity is set avoiding initial drag
      */
     public static void setVelocity(Player player, double x, double y, double z, boolean ignoreGround) {
         setVelocity(player, new Vec3(x, y, z), ignoreGround);

@@ -30,7 +30,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: "java"
 apply plugin: 'eclipse'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
-//apply plugin: 'maven-publish'
+apply plugin: 'maven-publish'
 
 // May be able to remove it
 apply plugin: "org.spongepowered.mixin"
@@ -238,23 +238,21 @@ configurations.all {
     }
 }
 
-//publishing {
-//    publications {
-//        mavenJava(MavenPublication) {
-//            artifact reobfArtifact
-//            artifact srcJar
-//            artifact deobfJar
-//        }
-//    }
-//    repositories {
-//        maven {
-//            url "s3://sekwah-maven/"
-//            authentication {
-//                awsIm(AwsImAuthentication)
-//            }
-//        }
-//    }
-//}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact reobfArtifact
+        }
+    }
+    repositories {
+        maven {
+            url "s3://sekwah-maven/"
+            authentication {
+                awsIm(AwsImAuthentication)
+            }
+        }
+    }
+}
 
 /**
  * For pre-releases and testers to be able to try the latest commits if they want.
@@ -309,7 +307,7 @@ curseforge {
         // TODO add code to reference this but also cut the latest change logs in for the files
         changelog = "${project.github}/blob/${branch}/CHANGELOG.md"
         changelogType = 'markdown'
-        releaseType = 'release'
+        releaseType = 'beta'
         addGameVersion '1.18'
         addGameVersion '1.18.1'
 

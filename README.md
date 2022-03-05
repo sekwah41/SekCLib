@@ -2,7 +2,7 @@
 Sekwah's minecraft library
 
 ## Features
- * Capability sync annotations
+ * Capability @Sync annotations
 
 ## Utilities
 Not fully fledged features but just small utilities in the com.sekwah.util package I use between my mods.

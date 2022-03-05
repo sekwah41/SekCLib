@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[35,)"
+loaderVersion="[38,)"
 issueTrackerURL="https://github.com/sekwah41/Naruto-Mod/issues"
 license="MIT"
 [[mods]]
@@ -16,7 +16,7 @@ A library mod used mostly for Sekwah41's mods used for animation and physics.
 [[dependencies.sekclib]]
     modId="forge"
     mandatory=true
-    versionRange="[35,)"
+    versionRange="[38,)"
     ordering="NONE"
     side="BOTH"
 
@@ -24,6 +24,6 @@ A library mod used mostly for Sekwah41's mods used for animation and physics.
 [[dependencies.sekclib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.1,)"
+    versionRange="[1.18,)"
     ordering="NONE"
     side="BOTH"

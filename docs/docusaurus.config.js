@@ -24,7 +24,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/sekwah41/SekCLib/edit/master/',
+          editUrl: 'https://github.com/sekwah41/SekCLib/edit/master/docs/',
         },
         blog: false,
         theme: {

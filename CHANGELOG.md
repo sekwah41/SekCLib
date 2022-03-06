@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/sekwah41/SekCLib/compare/v0.0.2...v0.1.0) (2022-03-06)
+
+
+### Features ✨
+
+* add vec3 sync tracker ([f62ae6f](https://github.com/sekwah41/SekCLib/commit/f62ae6fb0cc6266c0d570523eedf6fd36d142191))
+
 ### [0.0.2](https://github.com/sekwah41/SekCLib/compare/v0.0.1...v0.0.2) (2022-03-06)
 
 

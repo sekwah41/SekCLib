@@ -8,10 +8,6 @@ At the moment we only have plans to support the latest versions of mc and forge.
 We are also planning to host our own maven though for now you can use [Curse Maven](https://www.cursemaven.com/).
 
 ## build.gradle (Maven)
-We need to finish setting up our maven. For now check out the CurseMaven method.
-We will try to keep it up to date with the latest file id.
-
-## build.gradle
 ```groovy
 repositories {
     maven { url = "https://maven.sekwah.com" }

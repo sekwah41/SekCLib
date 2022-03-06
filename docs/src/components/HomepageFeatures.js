@@ -27,7 +27,7 @@ const FeatureList = [
     Svg: require('../../static/img/image3.svg').default,
     description: (
       <>
-          We are currently in the process of remaking the animation system. For previews of what it used to look like check out the old 1.7.10 copies.
+          We also have plans to create a modern version of the old animation system from the <a href='https://www.curseforge.com/minecraft/mc-mods/sekwah41s-naruto-mod'>Naruto Mod</a>. For previews of what it used to look like check out the old 1.7.10 copies.
       </>
     ),
   },

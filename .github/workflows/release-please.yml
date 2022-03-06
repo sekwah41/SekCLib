@@ -30,12 +30,13 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 17
-      - name: Download MC assets
-        if: ${{ steps.release.outputs.release_created }}
-        run: ./gradlew downloadAssets || ./gradlew downloadAssets || (sleep 30s && ./gradlew downloadAssets)
-      - name: Run DataGen
-        if: ${{ steps.release.outputs.release_created }}
-        run: ./gradlew runData
+# This is only needed if we need to run datagen
+#      - name: Download MC assets
+#        if: ${{ steps.release.outputs.release_created }}
+#        run: ./gradlew downloadAssets || ./gradlew downloadAssets || (sleep 30s && ./gradlew downloadAssets)
+#      - name: Run DataGen
+#        if: ${{ steps.release.outputs.release_created }}
+#        run: ./gradlew runData
       - name: Build and publish (release)
         if: ${{ steps.release.outputs.release_created }}
         env:

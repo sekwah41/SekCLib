@@ -43,6 +43,8 @@ jobs:
           CURSE_API: ${{ secrets.CURSE_API }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           IS_RELEASE: ${{ steps.release.outputs.release_created }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           # Build
           ./gradlew build discordupload curseforge publish

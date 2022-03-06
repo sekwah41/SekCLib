@@ -242,6 +242,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             artifact reobfArtifact
+            artifact srcJar
         }
     }
     repositories {

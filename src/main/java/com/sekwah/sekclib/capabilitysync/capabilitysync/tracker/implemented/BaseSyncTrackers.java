@@ -3,6 +3,7 @@ package com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.implemented;
 import com.sekwah.sekclib.SekCLib;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterSyncTrackerTypeEvent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -15,5 +16,6 @@ public class BaseSyncTrackers {
         event.registerSyncTracker(ResourceLocation.class, new ResourceLocationSyncTracker());
         event.registerSyncTracker(String.class, new StringSyncTracker());
         event.registerSyncTracker(boolean.class, new BoolSyncTracker());
+        event.registerSyncTracker(Vec3.class, new Vec3SyncTracker());
     }
 }

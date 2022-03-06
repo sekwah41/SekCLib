@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.0](https://github.com/sekwah41/SekCLib/compare/v0.1.0...v0.2.0) (2022-03-06)
+
+
+### Features ✨
+
+* add byte sync tracker ([00ea96f](https://github.com/sekwah41/SekCLib/commit/00ea96f600cb5d50cc7d13a06c75a8d97617c300))
+* add the ability to sync null values ([f0580f8](https://github.com/sekwah41/SekCLib/commit/f0580f8400c260d0f2d0a8bf43ffc8a6e939cddd))
+
 ## [0.1.0](https://github.com/sekwah41/SekCLib/compare/v0.0.2...v0.1.0) (2022-03-06)
 
 

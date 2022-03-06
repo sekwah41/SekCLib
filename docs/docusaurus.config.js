@@ -112,8 +112,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-      },
-      image: 'img/narutomodbanner.png',
+      }
     }),
 };
 

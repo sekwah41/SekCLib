@@ -19,7 +19,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    implementation fg.deobf("com.sekwah:SekCLib:0.0.1") // Remember to check the latest version as this may not be up to date.
+    implementation fg.deobf("com.sekwah:SekCLib:0.0.2") // Remember to check the latest version as this may not be up to date.
 }
 ```
 

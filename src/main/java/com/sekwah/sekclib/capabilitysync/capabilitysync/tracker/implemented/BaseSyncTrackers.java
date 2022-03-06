@@ -16,6 +16,7 @@ public class BaseSyncTrackers {
         event.registerSyncTracker(ResourceLocation.class, new ResourceLocationSyncTracker());
         event.registerSyncTracker(String.class, new StringSyncTracker());
         event.registerSyncTracker(boolean.class, new BoolSyncTracker());
+        event.registerSyncTracker(byte.class, new ByteSyncTracker());
         event.registerSyncTracker(Vec3.class, new Vec3SyncTracker());
     }
 }

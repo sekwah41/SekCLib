@@ -1,8 +1,11 @@
-# SekCLib
-Sekwah's minecraft library
+# SekCore Library
 
 ## Features
  * Capability @Sync annotations
+
+## Planned
+ * Animations
+ * Ragdoll Physics
 
 ## Utilities
 Not fully fledged features but just small utilities in the com.sekwah.util package I use between my mods.

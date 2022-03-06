@@ -4,7 +4,6 @@ on:
       - master
       - "renovate/*"
       - "dependabot/*"
-      - "release-please*"
   workflow_dispatch:
 name: Build
 jobs:

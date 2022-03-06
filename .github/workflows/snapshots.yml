@@ -2,6 +2,8 @@ on:
   push:
     branches-ignore:
       - master
+      - "renovate/*"
+      - "dependabot/*"
   workflow_dispatch:
 name: Build
 jobs:

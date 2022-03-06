@@ -11,6 +11,18 @@ We are also planning to host our own maven though for now you can use [Curse Mav
 We need to finish setting up our maven. For now check out the CurseMaven method.
 We will try to keep it up to date with the latest file id.
 
+## build.gradle
+```groovy
+repositories {
+    maven { url = "https://maven.sekwah.com" }
+}
+```
+```groovy
+dependencies {
+    implementation fg.deobf("com.sekwah:SekCLib:${sekclib_version}")
+}
+```
+
 ## build.gradle (Curse Maven)
 ```groovy
 repositories {
@@ -24,7 +36,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    implementation fg.deobf("curse.maven:sekclib-371078:add-file-id")
+    implementation fg.deobf("curse.maven:sekclib-371078:3675891") // replace final id with the specific file id you want to use
 }
 ```
 You can get the file id by going to the [CurseForge files page](https://www.curseforge.com/minecraft/mc-mods/sekclib/files).

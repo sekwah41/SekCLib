@@ -19,3 +19,12 @@ dependencies {
     implementation fg.deobf("com.sekwah:SekCLib:0.2.0") // Remember to check the latest version as this may not be up to date.
 }
 ```
+Don't forget to also add the entry to your mods.toml file too.
+```yaml
+[[dependencies.yourmodhere]]
+    modId="sekclib"
+    mandatory=true
+    versionRange="[0.2.0,)"
+    ordering="NONE"
+    side="BOTH"
+```

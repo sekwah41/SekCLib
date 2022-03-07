@@ -12,6 +12,9 @@ The main interfaces will be kept the same though we will be optimising and impro
 This should not require any changes to your mod code though we will release major version bumps if it does make any incompatible changes.
 We will also announce on our [Discord](https://discord.sekwah.com/) server if there are any major changes.
 
+You can make edits on the client side, though whenever the values are broadcasted from the server it will overwrite whatever you  have set locally.
+This can be used if you can accurately update client side but want to just re-sync it on an interval from the server.
+
 ## Registering a Capability for Syncing
 To register a capability for syncing you will need to listen to the `RegisterCapabilitySyncEvent` on the `MOD` event bus.
 

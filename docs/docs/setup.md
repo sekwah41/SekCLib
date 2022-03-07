@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-description: Info on how to add the library to your mod.
+description: Info on how to add the library to your mod
 ---
 
 # Adding the library to your mod

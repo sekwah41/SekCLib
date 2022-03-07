@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-description: Info on how to add the library to your mod.
+description: Info on the @Sync Annotation and how to use it
 ---
 
 # @Sync Annotation

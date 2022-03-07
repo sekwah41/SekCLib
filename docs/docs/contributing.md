@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: Info on contributing to the library.
+description: Info on contributing to the library
 ---
 
 # Contributing

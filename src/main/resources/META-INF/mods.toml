@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[38,)"
+loaderVersion="[40,)"
 issueTrackerURL="https://github.com/sekwah41/Naruto-Mod/issues"
 license="MIT"
 [[mods]]
@@ -9,8 +9,7 @@ license="MIT"
     updateJSONURL="https://www.sekwah.com/modversions/sekclib.json"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/sekclib"
     authors="Sekwah41"
-    description='''
-A library mod designed to make aspects of modding easier, in particular network syncing with clients.
+    description='''A library mod designed to make aspects of modding easier, in particular network syncing with clients.
 
 Other features and utilities are also included.
 '''
@@ -18,7 +17,7 @@ Other features and utilities are also included.
 [[dependencies.sekclib]]
     modId="forge"
     mandatory=true
-    versionRange="[38,)"
+    versionRange="[40,)"
     ordering="NONE"
     side="BOTH"
 
@@ -26,6 +25,6 @@ Other features and utilities are also included.
 [[dependencies.sekclib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18,)"
+    versionRange="[1.18.2,)"
     ordering="NONE"
     side="BOTH"

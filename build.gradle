@@ -16,10 +16,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath(group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true) { exclude group: 'org.apache.logging.log4j' }
         //classpath "org.spongepowered:mixingradle:0.7+"
         classpath "org.apache.httpcomponents:httpmime:4.5.13"
         classpath "org.parchmentmc:librarian:1.+"
+
+        classpath 'org.apache.logging.log4j:log4j-api:2.11.2'
+        classpath 'org.apache.logging.log4j:log4j-core:2.11.2'
     }
 }
 plugins {

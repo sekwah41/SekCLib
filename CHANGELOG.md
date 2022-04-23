@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.1](https://github.com/sekwah41/SekCLib/compare/v0.3.0...v0.3.1) (2022-04-23)
+
+
+### Bug Fixes 🐛
+
+* alter range of supported mc versions to be more precise ([08bfe4e](https://github.com/sekwah41/SekCLib/commit/08bfe4e531d78595b15b9f79de316d2997be9af0))
+
 ## [0.3.0](https://github.com/sekwah41/SekCLib/compare/v0.2.0...v0.3.0) (2022-03-24)
 
 

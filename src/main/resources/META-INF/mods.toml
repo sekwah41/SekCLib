@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[40,)"
+loaderVersion="[40,41)"
 issueTrackerURL="https://github.com/sekwah41/Naruto-Mod/issues"
 license="MIT"
 [[mods]]
@@ -17,7 +17,7 @@ Other features and utilities are also included.
 [[dependencies.sekclib]]
     modId="forge"
     mandatory=true
-    versionRange="[40,)"
+    versionRange="[40,41)"
     ordering="NONE"
     side="BOTH"
 
@@ -25,6 +25,6 @@ Other features and utilities are also included.
 [[dependencies.sekclib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.2,)"
+    versionRange="[1.18.2]"
     ordering="NONE"
     side="BOTH"

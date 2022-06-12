@@ -22,7 +22,6 @@ public class SekCLibRegistries {
     public static void registerRegistries(NewRegistryEvent event) {
         RegistryBuilder<CapabilityEntry> capabilityEntries = new RegistryBuilder<>();
         capabilityEntries.setName(new ResourceLocation(SekCLib.MOD_ID, "capability_sync"));
-        capabilityEntries.setType(CapabilityEntry.class);
         capabilityEntries.disableSaving();
 
         event.create(capabilityEntries, (registry) -> {

@@ -34,7 +34,7 @@ public class CapabilitySyncRegistry {
                 .filter(value -> value.isAnnotationPresent(Sync.class))
                 .sorted(Comparator.comparing(Field::getName)).toList();
         CapabilityEntry capabilityEntry = new CapabilityEntry(resourceSyncName, capability, clazz);
-        SekCLibRegistries.CAPABILITY_REGISTRY.register(capabilityEntry);
+        SekCLibRegistries.CAPABILITY_REGISTRY.register(resourceSyncName, capabilityEntry);
         List<ModLoadingException> errors = new ArrayList<>();
         int trackerId = 0;
         for (Field field : values) {

@@ -2,25 +2,23 @@ package com.sekwah.sekclib.capabilitysync;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CapabilityEntry extends ForgeRegistryEntry<CapabilityEntry> {
-    private Capability<?> capability;
-    private Class clazz;
+public class CapabilityEntry {
+    private final Capability<?> capability;
+    private final Class clazz;
 
-    private List<SyncEntry> syncEntries = new ArrayList<>();
+    private final List<SyncEntry> syncEntries = new ArrayList<>();
 
-    private Map<String, SyncEntry> syncEntryHashMap = new HashMap<>();
+    private final Map<String, SyncEntry> syncEntryHashMap = new HashMap<>();
 
     public CapabilityEntry(ResourceLocation resourceSyncName, Capability<?> capability, Class clazz) {
         this.capability = capability;
         this.clazz = clazz;
-        this.setRegistryName(resourceSyncName);
     }
 
     public Capability<?> getCapability() {

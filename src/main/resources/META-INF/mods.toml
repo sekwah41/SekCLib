@@ -17,7 +17,7 @@ Other features and utilities are also included.
 [[dependencies.sekclib]]
     modId="forge"
     mandatory=true
-    versionRange="[41,42)"
+    versionRange="[41.0.69,42)"
     ordering="NONE"
     side="BOTH"
 

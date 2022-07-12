@@ -71,13 +71,13 @@ public class SyncDataCapabilityHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void entityLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-        CapabilityBroadcaster.checkCapData(event.getEntityLiving());
+    public static void entityLivingUpdate(LivingEvent.LivingTickEvent event) {
+        CapabilityBroadcaster.checkCapData(event.getEntity());
     }
 
     @SubscribeEvent
     public static void dimensionChange(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if(event.getPlayer() instanceof ServerPlayer serverPlayer) {
+        if(event.getEntity() instanceof ServerPlayer serverPlayer) {
             CapabilityBroadcaster.broadcastCapChanges(serverPlayer, true);
         }
     }
@@ -88,7 +88,7 @@ public class SyncDataCapabilityHandler {
      */
     @SubscribeEvent
     public static void playerTracking(PlayerEvent.StartTracking event) {
-        if(event.getPlayer() instanceof ServerPlayer serverPlayer && event.getTarget() instanceof LivingEntity livingEntity) {
+        if(event.getEntity() instanceof ServerPlayer serverPlayer && event.getTarget() instanceof LivingEntity livingEntity) {
             CapabilityBroadcaster.broadcastCapToPlayer(livingEntity, serverPlayer);
         }
     }

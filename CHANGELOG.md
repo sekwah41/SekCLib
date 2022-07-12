@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/sekwah41/SekCLib/compare/v0.4.0...v0.4.1) (2022-07-12)
+
+
+### Bug Fixes 🐛
+
+* class name updateds to avoid crashing ([ab0dfd2](https://github.com/sekwah41/SekCLib/commit/ab0dfd24663b3fcad5138aa986a30c0b6ef9e6d3))
+
 ## [0.4.0](https://github.com/sekwah41/SekCLib/compare/v0.3.1...v0.4.0) (2022-06-12)
 
 

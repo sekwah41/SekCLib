@@ -12,6 +12,7 @@ Not fully fledged features but just small utilities in the com.sekwah.util packa
 Not all are mentioned here but I will mention the main ones
  * Color Utils (Color wheel + java.awt.Color to mc colors)
  * Player Utils (Easy server -> client velocity + fix inconsistencies)
+ * Shape Utils (For rotating and splitting shapes mostly for multiblock tiles.)
 
 ## Will you add fabric support?
 As of this time we do not plan to support Fabric,

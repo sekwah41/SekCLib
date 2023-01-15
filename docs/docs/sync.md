@@ -15,6 +15,29 @@ We will also announce on our [Discord](https://discord.sekwah.com/) server if th
 You can make edits on the client side, though whenever the values are broadcasted from the server it will overwrite whatever you  have set locally.
 This can be used if you can accurately update client side but want to just re-sync it on an interval from the server.
 
+## Example Code
+
+The following is an example with two supported types of data, and a custom one registered via the RegisterSyncTrackerTypeEvent.
+```java
+
+import com.sekwah.sekclib.capabilitysync.capabilitysync.annotation.Sync;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+
+public class ExampleCapability implements IExampleCapability, ICapabilityProvider {
+
+    @Sync(minTicks = 1)
+    public ResourceLocation currentlyChanneled;
+
+    @Sync(minTicks = 1)
+    public int ticksChanneled;
+
+    @Sync
+    public ToggleAbilityData toggleAbilityData;
+
+}
+```
+
+
 ## Registering a Capability for Syncing
 To register a capability for syncing you will need to listen to the `RegisterCapabilitySyncEvent` on the `MOD` event bus.
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/sekwah41/SekCLib/compare/v0.4.2...v0.4.3) (2023-01-15)
+
+
+### Bug Fixes 🐛
+
+* add support for 1.19.3 ([f474b6b](https://github.com/sekwah41/SekCLib/commit/f474b6bce46c66370448ae687fb1d7ddbe794da3))
+
 ## [0.4.2](https://github.com/sekwah41/SekCLib/compare/v0.4.1...v0.4.2) (2022-08-13)
 
 

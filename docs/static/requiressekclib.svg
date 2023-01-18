@@ -2,14 +2,17 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="666.66669"
-   height="250"
-   viewBox="0 0 176.38889 66.145832"
+   width="442.25705"
+   height="168.38528"
+   viewBox="0 0 117.01384 44.551939"
    version="1.1"
    id="svg5"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="requiressekclib.svg"
    xml:space="preserve"
+   inkscape:export-filename="requiressekclib.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -27,8 +30,8 @@
      showgrid="false"
      shape-rendering="auto"
      inkscape:zoom="1.829812"
-     inkscape:cx="365.33808"
-     inkscape:cy="77.057096"
+     inkscape:cx="316.42595"
+     inkscape:cy="107.11483"
      inkscape:window-width="2560"
      inkscape:window-height="1359"
      inkscape:window-x="0"
@@ -38,16 +41,18 @@
      id="defs2" /><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"><rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.64583333;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+     id="layer1"
+     transform="translate(-2.2546661,-2.375433)"><rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.85295;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
        id="rect111"
-       width="168.82651"
-       height="59.385513"
-       x="3.577584"
-       y="3.6983509"
-       ry="12.313657" /><image
-       width="53.34668"
-       height="53.34668"
+       width="115.1609"
+       height="42.69899"
+       x="3.1811411"
+       y="3.301908"
+       ry="12.313657"
+       rx="12.313657" /><image
+       width="37.28054"
+       height="37.28054"
        preserveAspectRatio="none"
        xlink:href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gKgSUNDX1BST0ZJTEUAAQEAAAKQbGNtcwQwAABtbnRyUkdC
 IFhZWiAH4wAJAAYAAwAFADlhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAA
@@ -395,20 +400,20 @@ B6pVa/P2heR6sd1AAEBgPoDEKdxIaigN3ZJdyGswM/AP6wi4/YLz56bEZbv/AL90HohcqJjAQbbI
 1CjCGIRay7x/VyhhhoMIQUVgy4SuuCdaI9siBEAG39p//9k=
 "
        id="image5079"
-       x="16.988699"
-       y="6.4128103" /><text
+       x="12.648408"
+       y="5.5743589" /><text
        xml:space="preserve"
-       style="font-size:15.3349px;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:12.779;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       x="86.346977"
-       y="29.921162"
+       style="font-size:10.9166px;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:9.09713;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       x="58.767521"
+       y="22.131559"
        id="text5506"><tspan
          id="tspan5504"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:12.779"
-         x="86.346977"
-         y="29.921162"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:9.09713"
+         x="58.767521"
+         y="22.131559"
          sodipodi:role="line">Requires</tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:12.779"
-         x="86.346977"
-         y="49.08979"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:9.09713"
+         x="58.767521"
+         y="35.777309"
          id="tspan5766"
          sodipodi:role="line">SekCLib</tspan></text></g></svg>

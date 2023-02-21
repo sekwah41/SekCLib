@@ -26,6 +26,7 @@ buildscript {
     }
 }
 plugins {
+    id "com.modrinth.minotaur" version "2.+"
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
@@ -158,7 +159,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.19.2-43.0.8'
+    minecraft 'net.minecraftforge:forge:1.19.3-44.1.5'
 
     //implementation 'org.spongepowered:mixin:0.8.5'
     //annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -255,6 +256,12 @@ publishing {
     }
 }
 
+def getReleaseChangelog() {
+    def changelogFile = file('CHANGELOG.md')
+    def changelog = "## [${changelogFile.text.split('\n## \\[')[1]}\n\n"// ${project.github}/blob/${branch}/CHANGELOG.md
+    return changelog;
+}
+
 /**
  * For pre-releases and testers to be able to try the latest commits if they want.
  * If the builds start exceeding 8MB then we may want to upload to s3 instead and periodically clear.
@@ -276,8 +283,10 @@ task discordupload {
             if(!isRelease) {
                 builder.addTextBody("content", "New snapshot or testing build")
             } else {
-                builder.addTextBody("content", "New release build\n\n" +
-                        "Current Features: <${project.github}/blob/master/CHANGELOG.md>")
+                builder.addTextBody("content", "New release build\n" +
+                        "```markdown\n" +
+                        "${getReleaseChangelog()}\n" +
+                        "```")
             }
 
             builder.addBinaryBody("file", file(jar.archiveFile).newInputStream(), ContentType.APPLICATION_OCTET_STREAM, jar.archiveName)
@@ -306,7 +315,7 @@ curseforge {
     project {
         id = project.curse_project_id
         // TODO add code to reference this but also cut the latest change logs in for the files
-        changelog = "${project.github}/blob/${branch}/CHANGELOG.md"
+        changelog = getReleaseChangelog()
         changelogType = 'markdown'
         releaseType = 'release'
         addGameVersion '1.19'
@@ -320,4 +329,15 @@ curseforge {
         addArtifact srcJar
         addArtifact deobfJar
     }
+}
+
+// https://github.com/modrinth/minotaur
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = project.modrinth_slug
+    versionType = "release"
+    uploadFile = jar
+    additionalFiles = [srcJar, deobfJar]
+    gameVersions = ["1.19", "1.19.1", "1.19.2", "1.19.3"]
+    changelog = getReleaseChangelog()
 }

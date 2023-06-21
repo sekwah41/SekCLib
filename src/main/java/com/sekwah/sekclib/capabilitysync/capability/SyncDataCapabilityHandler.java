@@ -57,7 +57,7 @@ public class SyncDataCapabilityHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
-        if (!event.getObject().level.isClientSide()) {
+        if (!event.getObject().level().isClientSide()) {
             createSyncData(event);
         }
     }
@@ -84,7 +84,7 @@ public class SyncDataCapabilityHandler {
 
     /**
      * Server side event
-     * @param event
+     * @param event the event
      */
     @SubscribeEvent
     public static void playerTracking(PlayerEvent.StartTracking event) {

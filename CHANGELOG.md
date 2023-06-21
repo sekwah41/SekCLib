@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/sekwah41/SekCLib/compare/v0.4.3...v1.0.0) (2023-06-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* 1.19 support dropped
+
+### Features ✨
+
+* updated to 1.20+ ([02c3381](https://github.com/sekwah41/SekCLib/commit/02c3381c09d736bd2a3b56d4f95f8a263c8bb647))
+
 ## [0.4.3](https://github.com/sekwah41/SekCLib/compare/v0.4.2...v0.4.3) (2023-01-15)
 
 

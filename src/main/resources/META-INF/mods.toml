@@ -8,7 +8,7 @@ license="MIT"
     displayName="SekC Lib"
     updateJSONURL="https://www.sekwah.com/modversions/sekclib.json"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/sekclib"
-    authors="Sekwah41"
+    authors="Sekwah"
     description='''A library mod designed to make aspects of modding easier, in particular network syncing with clients.
 
 Other features and utilities are also included.

@@ -33,7 +33,7 @@ Don't forget to also add the entry to your mods.toml file too.
 
 If you would like to include the mod within your mod, feel free to. This can be achieved with the following build.gradle changes.
 
-I only ask that you list it as an embedded library on Curse or Modrinth.
+I only ask that you list it as an embedded library on Curse or Modrinth. (lets me see what projects are using mine ^.^)
 
 ```groovy
 jarJar.enable()

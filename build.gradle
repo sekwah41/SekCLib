@@ -273,7 +273,6 @@ task discordupload {
         String discordWebhook = System.getenv("DISCORD_WEBHOOK")
 
         if(discordWebhook != null) {
-            println("Logging Into Discord")
 
             CloseableHttpClient httpClient = HttpClients.createDefault()
             HttpPost uploadFile = new HttpPost(discordWebhook)
@@ -288,7 +287,7 @@ task discordupload {
                         "```")
             }
 
-            builder.addBinaryBody("file", file(jar.archiveFile).newInputStream(), ContentType.APPLICATION_OCTET_STREAM, jar.getArchivesBaseName())
+            builder.addBinaryBody("file", file(jar.archiveFile).newInputStream(), ContentType.APPLICATION_OCTET_STREAM, jar.archiveBaseName.get())
 
             HttpEntity multipart = builder.build()
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/sekwah41/SekCLib/compare/v1.0.0...v1.0.1) (2023-06-22)
+
+
+### Bug Fixes 🐛
+
+* **ci:** automated discord uploading ([b528b4a](https://github.com/sekwah41/SekCLib/commit/b528b4a260765f618e7ab184b5e5fc0740984d13))
+* widen support to support 1.20+ as it's not likely it will break across sub-versions ([a0695cd](https://github.com/sekwah41/SekCLib/commit/a0695cdb6077c9aa16c4f88c491f1c2c71953c8b))
+
 ## [1.0.0](https://github.com/sekwah41/SekCLib/compare/v0.4.3...v1.0.0) (2023-06-21)
 
 

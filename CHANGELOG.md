@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/sekwah41/SekCLib/compare/v1.0.1...v1.0.2) (2023-06-22)
+
+
+### Bug Fixes 🐛
+
+* wrong basename function called causing strange jar name ([15bf4b3](https://github.com/sekwah41/SekCLib/commit/15bf4b3fd83a3f4e2cae3803cabf89b9c3e01170))
+
 ## [1.0.1](https://github.com/sekwah41/SekCLib/compare/v1.0.0...v1.0.1) (2023-06-22)
 
 

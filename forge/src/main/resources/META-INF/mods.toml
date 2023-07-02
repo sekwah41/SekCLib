@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[41,)"
-issueTrackerURL="https://github.com/sekwah41/Naruto-Mod/issues"
+issueTrackerURL="https://github.com/sekwah41/SekCLib/issues"
 license="MIT"
 [[mods]]
     modId="sekclib"

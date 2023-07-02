@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[41,)"
+issueTrackerURL="https://github.com/sekwah41/SekCLib/issues"
+license="MIT"
+[[mods]]
+    modId="sekclibtest"
+    version="${file.jarVersion}"
+    displayName="SekC Lib Test"
+    authors="Sekwah"
+    description='''A mod just to test sekclib
+'''
+
+[[dependencies.sekclibtest]]
+    modId="forge"
+    mandatory=true
+    versionRange="[46.0.1,48)"
+    ordering="NONE"
+    side="BOTH"
+
+# https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html
+[[dependencies.sekclibtest]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20,)"
+    ordering="NONE"
+    side="BOTH"

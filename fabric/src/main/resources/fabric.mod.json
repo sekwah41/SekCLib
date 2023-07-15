@@ -25,5 +25,10 @@
     "fabric-api": "*"
   },
   "suggests": {
+  },
+  "custom": {
+    "modmenu": {
+      "badges": [ "library" ]
+    }
   }
 }

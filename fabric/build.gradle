@@ -1,6 +1,25 @@
+import org.apache.http.HttpEntity
+import org.apache.http.client.methods.CloseableHttpResponse
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.entity.ContentType
+import org.apache.http.entity.mime.MultipartEntityBuilder
+import org.apache.http.impl.client.CloseableHttpClient
+import org.apache.http.impl.client.HttpClients
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.apache.httpcomponents:httpmime:4.5.14"
+    }
+}
+
 plugins {
     id 'fabric-loom' version '1.2-SNAPSHOT'
     id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 def branch = System.getenv("GITHUB_REF")
@@ -96,6 +115,8 @@ java {
 }
 
 jar {
+    archiveClassifier = 'universal'
+    archiveBaseName = "${archivesBaseName}${project.mc_label}-fabric"
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}"}
     }
@@ -114,6 +135,51 @@ publishing {
             authentication {
                 awsIm(AwsImAuthentication)
             }
+        }
+    }
+}
+
+
+def getReleaseChangelog() {
+    def changelogFile = file('../CHANGELOG.md')
+    def changelog = "## [${changelogFile.text.split('\n## \\[')[1]}\n\n"// ${project.github}/blob/${branch}/CHANGELOG.md
+    return changelog;
+}
+
+task discordupload {
+    dependsOn(jar)
+    doLast {
+        String discordWebhook = System.getenv("DISCORD_WEBHOOK")
+
+        if(discordWebhook != null) {
+
+            CloseableHttpClient httpClient = HttpClients.createDefault()
+            HttpPost uploadFile = new HttpPost(discordWebhook)
+
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create()
+            if(!isRelease) {
+                builder.addTextBody("content", "New snapshot or testing build")
+            } else {
+                builder.addTextBody("content", "New release build\n" +
+                        "```markdown\n" +
+                        "${getReleaseChangelog()}\n" +
+                        "```")
+            }
+
+            var name = jar.archiveBaseName.get() + "-" + jar.archiveVersion.get() + ".jar"
+
+            builder.addBinaryBody("file", file(jar.archiveFile).newInputStream(), ContentType.APPLICATION_OCTET_STREAM, name)
+
+            HttpEntity multipart = builder.build()
+
+            uploadFile.setEntity(multipart)
+            CloseableHttpResponse response = httpClient.execute(uploadFile)
+            response.getEntity()
+
+            println("Posted build")
+
+        } else {
+            println("Discord webhook unspecified")
         }
     }
 }

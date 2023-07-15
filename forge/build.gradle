@@ -261,12 +261,7 @@ def getReleaseChangelog() {
     return changelog;
 }
 
-/**
- * For pre-releases and testers to be able to try the latest commits if they want.
- * If the builds start exceeding 8MB then we may want to upload to s3 instead and periodically clear.
- * TODO possibly add a task that announces when builds are made?
- * Though add a note that it may take a while for Curse to approve the files.
- */
+
 task discordupload {
     dependsOn(jar)
     doLast {

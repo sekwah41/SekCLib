@@ -42,4 +42,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
           # Build
-          ./gradlew build :${{ runner.loader }}:${{ matrix.release-task }}
+          ./gradlew build :${{ matrix.loader }}:${{ matrix.release-task }}

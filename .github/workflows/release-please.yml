@@ -55,4 +55,4 @@ jobs:
           IS_RELEASE: true
         run: |
           # Build
-          ./gradlew build :${{ runner.loader }}:${{ matrix.release-task }}
+          ./gradlew build :${{ matrix.loader }}:${{ matrix.release-task }}

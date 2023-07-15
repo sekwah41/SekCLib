@@ -3,18 +3,13 @@ loaderVersion="[41,)"
 issueTrackerURL="https://github.com/sekwah41/SekCLib/issues"
 license="MIT"
 [[mods]]
-    modId="sekclib"
+    modId="sekclibtest"
     version="${file.jarVersion}"
-    displayName="SekCore Lib"
-    updateJSONURL="https://www.sekwah.com/modversions/sekclib.json"
-    displayURL="https://modrinth.com/mod/sekclib/"
+    displayName="SekC Lib Test"
     authors="Sekwah"
-    description='''A library mod designed to make aspects of modding easier, in particular network syncing with clients.
+    description='''A mod just to test sekclib'''
 
-Other features and utilities are also included.
-'''
-
-[[dependencies.sekclib]]
+[[dependencies.sekclibtest]]
     modId="forge"
     mandatory=true
     versionRange="[46.0.1,48)"
@@ -22,7 +17,7 @@ Other features and utilities are also included.
     side="BOTH"
 
 # https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html
-[[dependencies.sekclib]]
+[[dependencies.sekclibtest]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.20,)"

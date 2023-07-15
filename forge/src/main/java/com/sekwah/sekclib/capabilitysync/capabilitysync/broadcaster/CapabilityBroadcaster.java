@@ -1,6 +1,6 @@
 package com.sekwah.sekclib.capabilitysync.capabilitysync.broadcaster;
 
-import com.sekwah.sekclib.SekCLib;
+import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
 import com.sekwah.sekclib.capabilitysync.capability.SyncDataCapabilityHandler;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.CapabilityTracker;
@@ -36,7 +36,7 @@ public class CapabilityBroadcaster {
                         try {
                             syncTracker.tick(data);
                         } catch (Throwable e) {
-                            SekCLib.LOGGER.error("There was a problem updating a sync tracker", e);
+                            SekCLibForge.LOGGER.error("There was a problem updating a sync tracker", e);
                         }
                     }
                 });

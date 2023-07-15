@@ -1,6 +1,6 @@
 package com.sekwah.sekclib.network.s2c;
 
-import com.sekwah.sekclib.SekCLib;
+import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
 import com.sekwah.sekclib.capabilitysync.SyncEntry;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.broadcaster.CapabilityInfo;
@@ -144,7 +144,7 @@ public class ClientCapabilitySyncPacket {
                                         }
                                         syncEntry.getSetter().invoke(targetCap, syncValue);
                                     } catch (Throwable e) {
-                                        SekCLib.LOGGER.error("There was a problem setting a value", e);
+                                        SekCLibForge.LOGGER.error("There was a problem setting a value", e);
                                     }
                                 }
                             });

@@ -1,4 +1,4 @@
-package com.sekwah.sekclib.util;
+package com.sekwah.sekclib.core.util;
 
 import net.minecraft.network.chat.TextColor;
 import java.awt.*;

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "sekclib",
+  "version": "${version}",
+  "name": "SekCore Lib",
+  "description": "A library mod designed to make aspects of modding easier, in particular network syncing with clients.\n\nOther features and utilities are also included.",
+  "authors": [
+    "Sekwah"
+  ],
+  "contact": {
+    "homepage": "https://sekclib.sekwah.com/",
+    "sources": "https://github.com/sekwah41/SekCLib"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.sekwah.sekclib.SekCLibFabric"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": ">=1.20",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+  }
+}

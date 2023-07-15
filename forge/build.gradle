@@ -39,14 +39,11 @@ if(branch != null) {
 }
 def isRelease = System.getenv("IS_RELEASE") == "true"
 
-snapshotName = "forge-" + ((branch == null || branch.startsWith("release-please")) ? "SNAPSHOT" : branch)
+snapshotName = ((branch == null || branch.startsWith("release-please")) ? "SNAPSHOT" : branch)
 def githubSha = System.getenv("GITHUB_SHA")
 def shaRef = githubSha != null ? "-${githubSha.substring(0, 8)}" : ""
 
 println "Branch ${branch}${shaRef} isRelease: '${isRelease}'"
-
-
-println project.game_versions.tokenize(",")
 
 // Get version from file managed by please-release
 def versionString = (file('../version.txt').text + (isRelease ? "" : "-${snapshotName}${shaRef}")).replaceAll('\n', '')
@@ -104,6 +101,7 @@ minecraft {
             mods {
                 "${project.modid}" {
                     source sourceSets.main
+                    source project(":core").sourceSets.main
                 }
             }
         }
@@ -140,6 +138,10 @@ minecraft {
             mods {
                 "${project.modid}" {
                     source sourceSets.main
+                    // Possibly check if there is a nicer way to set this as intellij doesnt like source sets being used across multiple projects
+                    // https://youtrack.jetbrains.com/issue/IDEABKL-6745
+                    // While it all works fine with the gradle runs and viewing sources, it can be a bit odd with certain other things.
+                    source project(":core").sourceSets.main
                 }
             }
         }
@@ -154,6 +156,8 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    implementation project(":core")
 
     //implementation 'org.spongepowered:mixin:0.8.5'
     //annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -193,7 +197,7 @@ dependencies {
 jar {
     finalizedBy 'reobfJar'
     archiveClassifier = 'universal'
-    archiveBaseName = "${archivesBaseName}${project.mc_label}"
+    archiveBaseName = "${archivesBaseName}${project.mc_label}-forge"
     manifest {
         attributes([
                 "Specification-Title": project.modid,
@@ -221,7 +225,7 @@ task srcJar(type: Jar) {
     build.dependsOn it
     from sourceSets.main.allSource
     archiveClassifier = 'sources'
-    archiveBaseName = "${archivesBaseName}${project.mc_label}"
+    archiveBaseName = "${archivesBaseName}${project.mc_label}-forge"
     from file("LICENSE")
 }
 
@@ -229,13 +233,14 @@ task deobfJar(type: Jar) {
     build.dependsOn it
     from sourceSets.main.output
     archiveClassifier = 'deobf'
-    archiveBaseName = "${archivesBaseName}${project.mc_label}"
+    archiveBaseName = "${archivesBaseName}${project.mc_label}-forge"
     from file("LICENSE")
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId = "sekclib-forge"
             artifact reobfArtifact
             artifact srcJar
         }
@@ -330,10 +335,21 @@ modrinth {
     projectId = project.modrinth_slug
     versionType = "release"
     uploadFile = jar
+    versionName = "${versionString} for Forge"
     additionalFiles = [srcJar, deobfJar]
     // Split string into array
 
 
     gameVersions = project.game_versions.tokenize(",")
     changelog = getReleaseChangelog()
+
+    syncBodyFrom = rootProject.file("README.md").text
+}
+
+tasks.withType(JavaCompile) {
+    source(project(":core").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":core").sourceSets.main.resources
 }

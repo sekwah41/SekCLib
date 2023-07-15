@@ -1,6 +1,6 @@
 package com.sekwah.sekclib.capabilitysync.capabilitysync;
 
-import com.sekwah.sekclib.SekCLib;
+import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
 import com.sekwah.sekclib.capabilitysync.SyncEntry;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.annotation.Sync;
@@ -41,14 +41,14 @@ public class CapabilitySyncRegistry {
             Sync sync = field.getAnnotation(Sync.class);
             if(!CLASS_SYNC_TRACKER_SERIALIZER.containsKey(field.getType())) {
                 String message = String.format("@Sync used on unsupported type %s. (Class: %s, Field: %s)", field.getType().getName(), clazz.getName(), field.getName());
-                SekCLib.LOGGER.error(message);
+                SekCLibForge.LOGGER.error(message);
                 errors.add(new ModLoadingException(null, ModLoadingStage.COMMON_SETUP, message, null));
             }
             try {
                 field.setAccessible(true);
             } catch(UnsupportedOperationException e) {
                 String message = String.format("Failed to set field accessible. (Class: %s, Field: %s)", clazz.getName(), field.getName());
-                SekCLib.LOGGER.error(message);
+                SekCLibForge.LOGGER.error(message);
                 errors.add(new ModLoadingException(null, ModLoadingStage.COMMON_SETUP, message, null));
             }
             try {
@@ -57,7 +57,7 @@ public class CapabilitySyncRegistry {
                 trackerId++;
             } catch (IllegalAccessException e) {
                 String message = String.format("There was a problem un-reflecting (Class: %s, Field: %s)", clazz.getName(), field.getName());
-                SekCLib.LOGGER.error(message);
+                SekCLibForge.LOGGER.error(message);
                 errors.add(new ModLoadingException(null, ModLoadingStage.COMMON_SETUP, message, null));
             }
         }

@@ -71,6 +71,10 @@ const config = {
             title: 'Downloads',
             items: [
               {
+                label: 'Modrinth',
+                href: 'https://modrinth.com/mod/sekclib',
+              },
+              {
                 label: 'CurseForge',
                 href: 'https://www.curseforge.com/minecraft/mc-mods/sekclib',
               },

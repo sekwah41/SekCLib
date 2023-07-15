@@ -1,0 +1,121 @@
+plugins {
+    id 'fabric-loom' version '1.2-SNAPSHOT'
+    id 'maven-publish'
+}
+
+def branch = System.getenv("GITHUB_REF")
+def snapshotName = null;
+if(branch != null) {
+    branch = branch.replace('refs/heads/', '')
+}
+def isRelease = System.getenv("IS_RELEASE") == "true"
+
+snapshotName = ((branch == null || branch.startsWith("release-please")) ? "SNAPSHOT" : branch)
+def githubSha = System.getenv("GITHUB_SHA")
+def shaRef = githubSha != null ? "-${githubSha.substring(0, 8)}" : ""
+
+println "Branch ${branch}${shaRef} isRelease: '${isRelease}'"
+
+// Get version from file managed by please-release
+def versionString = (file('../version.txt').text + (isRelease ? "" : "-${snapshotName}${shaRef}")).replaceAll('\n', '')
+setVersion(versionString)
+println "Version: ${getVersion()}"
+
+group = project.package // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+
+base {
+    archivesName = project.archive
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+
+repositories {
+    // Add repositories to retrieve artifacts from in here.
+    // You should only use this when depending on other mods because
+    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
+    maven {
+        name = "Terrafromer MC"
+        url = "https://maven.terraformersmc.com/releases"
+    }
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "${project.modid}" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+
+}
+
+dependencies {
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+    mappings loom.officialMojangMappings()
+
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+
+    modImplementation "com.terraformersmc:modmenu:7.1.0"
+
+    // Uncomment the following line to enable the deprecated Fabric API modules.
+    // These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
+
+    // modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+}
+
+processResources {
+    from project(":core").sourceSets.main.resources
+    inputs.property "version", getVersion()
+
+    filesMatching("fabric.mod.json") {
+        expand "version": getVersion()
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 17
+}
+
+java {
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}"}
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "sekclib-fabric"
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "s3://sekwah-maven/"
+            authentication {
+                awsIm(AwsImAuthentication)
+            }
+        }
+    }
+}
+
+

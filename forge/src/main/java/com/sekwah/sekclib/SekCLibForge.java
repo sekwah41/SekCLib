@@ -14,14 +14,14 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(SekCLib.MOD_ID)
-public class SekCLib {
+@Mod(SekCLibForge.MOD_ID)
+public class SekCLibForge {
 
     public static final String MOD_ID = "sekclib";
 
     public static final Logger LOGGER = LogManager.getLogger("SekC Lib");
 
-    public SekCLib() {
+    public SekCLibForge() {
 
         //ModLoadingContext loadingContext = ModLoadingContext.get();
         //loadingContext.registerConfig(ModConfig.Type.COMMON, NarutoConfig.MOD_CONFIG, "naruto-mod.toml");

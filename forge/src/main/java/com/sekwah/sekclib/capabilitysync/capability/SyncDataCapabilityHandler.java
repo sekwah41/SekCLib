@@ -1,6 +1,6 @@
 package com.sekwah.sekclib.capabilitysync.capability;
 
-import com.sekwah.sekclib.SekCLib;
+import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
 import com.sekwah.sekclib.capabilitysync.SyncEntry;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.CapabilitySyncRegistry;
@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = SekCLib.MOD_ID)
+@Mod.EventBusSubscriber(modid = SekCLibForge.MOD_ID)
 public class SyncDataCapabilityHandler {
 
     public static final Capability<ISyncData> SYNC_DATA = CapabilityManager.get(new CapabilityToken<>(){});
@@ -52,7 +52,7 @@ public class SyncDataCapabilityHandler {
             }
         }
 
-        event.addCapability(new ResourceLocation(SekCLib.MOD_ID, "sync_data"), syncData);
+        event.addCapability(new ResourceLocation(SekCLibForge.MOD_ID, "sync_data"), syncData);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

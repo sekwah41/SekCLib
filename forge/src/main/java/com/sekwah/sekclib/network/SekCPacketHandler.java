@@ -1,5 +1,5 @@
 package com.sekwah.sekclib.network;
-import com.sekwah.sekclib.SekCLib;
+import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.network.s2c.ClientCapabilitySyncPacket;
 import com.sekwah.sekclib.network.s2c.ClientVelocityPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +15,7 @@ public class SekCPacketHandler {
     public static final String PROTOCOL_VERSION = "1";
 
     public static final SimpleChannel SYNC_CHANNEL = NetworkRegistry.ChannelBuilder
-            .named(new ResourceLocation(SekCLib.MOD_ID, "sync_channel"))
+            .named(new ResourceLocation(SekCLibForge.MOD_ID, "sync_channel"))
             .networkProtocolVersion(() -> PROTOCOL_VERSION)
             .clientAcceptedVersions(PROTOCOL_VERSION::equals)
             .serverAcceptedVersions(PROTOCOL_VERSION::equals)

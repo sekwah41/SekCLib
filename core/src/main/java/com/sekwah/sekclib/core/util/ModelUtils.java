@@ -1,4 +1,4 @@
-package com.sekwah.sekclib.util;
+package com.sekwah.sekclib.core.util;
 
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;

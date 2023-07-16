@@ -18,5 +18,6 @@ plugins {
 
 include 'core'
 include 'fabric'
+include 'fabric-testmod'
 include 'forge'
 include 'forge-testmod'

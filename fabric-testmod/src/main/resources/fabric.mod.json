@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "sekclib",
+  "id": "sekclibtest",
   "version": "${version}",
-  "name": "SekCore Lib",
-  "description": "A library mod designed to make aspects of modding easier, in particular network syncing with clients.\nOther features and utilities are also included.",
+  "name": "SekCore Lib Test Mod",
+  "description": "A test mod for sekclib",
   "authors": [
     "Sekwah"
   ],
@@ -15,7 +15,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.sekwah.sekclib.SekCLibFabric"
+      "com.sekwah.sekclibtestmod.SekCLibTestModFabric"
     ]
   },
   "depends": {
@@ -25,10 +25,5 @@
     "fabric-api": "*"
   },
   "suggests": {
-  },
-  "custom": {
-    "modmenu": {
-      "badges": [ "library" ]
-    }
   }
 }

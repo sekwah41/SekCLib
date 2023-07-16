@@ -16,13 +16,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        classpath "org.spongepowered:mixingradle:0.7+"
         classpath(group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true)
         classpath "org.apache.httpcomponents:httpmime:4.5.14"
     }
-}
-plugins {
-    id "com.modrinth.minotaur" version "2.+"
-    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -30,9 +27,9 @@ apply plugin: "java"
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-def modid = "sekclib-testmod"
+def modid = "sekclibtest"
 
-//apply plugin: "org.spongepowered.mixin"
+apply plugin: "org.spongepowered.mixin"
 
 def branch = System.getenv("GITHUB_REF")
 def snapshotName = null;
@@ -103,6 +100,8 @@ minecraft {
             //property 'mixin.env.remapRefMap', 'true'
             //property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
+            ideaModule "SekCLib.forge-testmod.main"
+
             mods {
                 "${modid}" {
                     source sourceSets.main
@@ -120,6 +119,8 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+            ideaModule "SekCLib.forge-testmod.main"
+
             mods {
                 "${modid}" {
                     source sourceSets.main
@@ -136,6 +137,8 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+            ideaModule "SekCLib.forge-testmod.main"
 
             args '--mod', modid, '--all', '--output', file('src/generated/resources/')
 
@@ -157,39 +160,20 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    //implementation 'org.spongepowered:mixin:0.8.5'
-    //annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation 'org.spongepowered:mixin:0.8.5'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation project(":forge")
-    // Trick intellij to allow for better editing in here for the discord task
-    // compile "org.apache.httpcomponents:httpmime:4.5.13"
-    //implementation fg.deobf("curse.maven:torohealth-damage-indicators-245733:3556931")
-
-    //implementation fg.deobf("curse.maven:hwyla:${project.hwyla_fileid}")
-
-    //include('org.ow2.asm:asm-debug-all:5.2')
-
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
-
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 }
 
 // Readd if mixins start being used
-//mixin {
-//    add sourceSets.main, "mixins.${project.modid}.refmap.json"
-//
-//    debug.verbose = true
-//    debug.export = true
-//}
+mixin {
+    add sourceSets.main, "mixins.${modid}.refmap.json"
+
+    debug.verbose = true
+    debug.export = true
+}
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
@@ -300,42 +284,4 @@ task discordupload {
             println("Discord webhook unspecified")
         }
     }
-}
-
-tasks.curseforge.enabled = System.getenv("CURSE_API") != null
-
-curseforge {
-    logger.info("Curse api: " + System.getenv("CURSE_API"))
-    if (System.getenv("CURSE_API") != null) {
-        apiKey = System.getenv("CURSE_API")
-    }
-    project {
-        id = project.curse_project_id
-        // TODO add code to reference this but also cut the latest change logs in for the files
-        changelog = getReleaseChangelog()
-        changelogType = 'markdown'
-        releaseType = 'release'
-        addGameVersion '1.20'
-        addGameVersion '1.20.1'
-
-        mainArtifact(jar){
-
-        }
-        addArtifact srcJar
-        addArtifact deobfJar
-    }
-}
-
-// https://github.com/modrinth/minotaur
-modrinth {
-    token = System.getenv("MODRINTH_TOKEN")
-    projectId = project.modrinth_slug
-    versionType = "release"
-    uploadFile = jar
-    additionalFiles = [srcJar, deobfJar]
-    // Split string into array
-
-
-    gameVersions = project.game_versions.tokenize(",")
-    changelog = getReleaseChangelog()
 }

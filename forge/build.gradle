@@ -95,6 +95,9 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+
+            ideaModule "SekCLib.forge.main"
+
             //property 'mixin.env.remapRefMap', 'true'
             //property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
@@ -116,6 +119,8 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+            ideaModule "SekCLib.forge.main"
+
             mods {
                 "${project.modid}" {
                     source sourceSets.main
@@ -132,6 +137,8 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+            ideaModule "SekCLib.forge.main"
 
             args '--mod', project.modid, '--all', '--output', file('src/generated/resources/')
 
@@ -195,9 +202,11 @@ dependencies {
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
-    finalizedBy 'reobfJar'
-    archiveClassifier = 'universal'
+    // Not 100% if this is needed because it seems to output identical jars even if commented out
+    // But this HAS to be commented out to allow the forge-testmod to successfully run
+    // finalizedBy 'reobfJar'
     archiveBaseName = "${archivesBaseName}${project.mc_label}-forge"
+    archiveClassifier = 'universal'
     manifest {
         attributes([
                 "Specification-Title": project.modid,
@@ -234,6 +243,17 @@ task deobfJar(type: Jar) {
     from sourceSets.main.output
     archiveClassifier = 'deobf'
     archiveBaseName = "${archivesBaseName}${project.mc_label}-forge"
+    manifest {
+        attributes([
+                "Specification-Title": project.modid,
+                "Specification-Vendor": project.vendor,
+                "Specification-Version": "1", // We are version 1 of ourselves
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${versionString}",
+                "Implementation-Vendor" :project.vendor,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+        ])
+    }
     from file("LICENSE")
 }
 

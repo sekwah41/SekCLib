@@ -1,5 +1,8 @@
-// In the old version for auto you couldnt have seperate later stages easily
+// In the old version for auto you couldnt have separate later stages easily
 // Thanks to release-please we can leave this mostly empty
+// Need to clean up the gradle files as I know however the focus is on it working vs being best practices.
+// If you have suggestions on how to improve these feel free to make th em :)
+
 plugins {
     id "com.modrinth.minotaur" version "2.+"
 }

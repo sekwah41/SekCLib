@@ -15,7 +15,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.sekwah.sekclibtestmod.SekCLibTestModFabric"
+      "com.sekwah.sekclibtestmod.SekCLibTest"
     ]
   },
   "depends": {
@@ -25,5 +25,8 @@
     "fabric-api": "*"
   },
   "suggests": {
-  }
+  },
+  "mixins": [
+    "mixins.sekclibtest.json"
+  ]
 }

@@ -11,7 +11,6 @@ buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = "https://repo.spongepowered.org/maven" }
-        //maven { url = 'https://sizableshrimp.me/maven' }
         maven { url = "https://plugins.gradle.org/m2/" }
         mavenCentral()
     }
@@ -104,7 +103,7 @@ minecraft {
             mods {
                 "${project.modid}" {
                     source sourceSets.main
-                    source project(":core").sourceSets.main
+                    source project(":common").sourceSets.main
                 }
             }
         }
@@ -128,7 +127,8 @@ minecraft {
             }
         }
 
-        data {
+        // Uncomment if we need datagen
+        /*data {
             workingDirectory project.file('run')
 
             // Recommended logging data for a userdev environment
@@ -148,10 +148,10 @@ minecraft {
                     // Possibly check if there is a nicer way to set this as intellij doesnt like source sets being used across multiple projects
                     // https://youtrack.jetbrains.com/issue/IDEABKL-6745
                     // While it all works fine with the gradle runs and viewing sources, it can be a bit odd with certain other things.
-                    source project(":core").sourceSets.main
+                    source project(":common").sourceSets.main
                 }
             }
-        }
+        }*/
     }
 }
 
@@ -164,7 +164,7 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation project(":core")
+    implementation project(":common")
 
     //implementation 'org.spongepowered:mixin:0.8.5'
     //annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -362,9 +362,9 @@ modrinth {
 }
 
 tasks.withType(JavaCompile) {
-    source(project(":core").sourceSets.main.allSource)
+    source(project(":common").sourceSets.main.allSource)
 }
 
 processResources {
-    from project(":core").sourceSets.main.resources
+    from project(":common").sourceSets.main.resources
 }

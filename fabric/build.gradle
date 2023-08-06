@@ -198,4 +198,22 @@ task discordupload {
     }
 }
 
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = project.modrinth_slug
+    versionType = "release"
+    uploadFile = jar
+    versionName = "${versionString} for Fabric"
+    loaders = ["fabric"]
+
+    gameVersions = project.game_versions.tokenize(",")
+    changelog = getReleaseChangelog()
+    dependencies {
+        required.project "sekclib" // Creates a new required dependency on Fabric API
+    }
+
+    syncBodyFrom = rootProject.file("README.md").text
+}
+
+
 

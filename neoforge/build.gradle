@@ -335,6 +335,8 @@ curseforge {
         changelog = getReleaseChangelog()
         changelogType = 'markdown'
         releaseType = 'release'
+        addGameVersion 'Forge'
+        addGameVersion 'NeoForge'
         addGameVersion '1.20'
         addGameVersion '1.20.1'
 
@@ -353,6 +355,7 @@ modrinth {
     versionType = "release"
     uploadFile = jar
     versionName = "${versionString} for Forge"
+    loaders = ["forge", "neoforge"]
     additionalFiles = [srcJar, deobfJar]
     // Split string into array
 

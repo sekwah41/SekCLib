@@ -1,5 +1,6 @@
 package com.sekwah.sekclib;
 
+import com.sekwah.sekclib.common.handler.HandlerManager;
 import net.fabricmc.api.ModInitializer;
 
 public class SekCLibFabric implements ModInitializer {

@@ -1,6 +1,7 @@
 package com.sekwah.sekclib.capabilitysync.capabilitysync.tracker;
 
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
+import com.sekwah.sekclib.common.capabilitysync.tracker.SyncTracker;
 import net.minecraftforge.common.capabilities.Capability;
 
 import java.util.ArrayList;

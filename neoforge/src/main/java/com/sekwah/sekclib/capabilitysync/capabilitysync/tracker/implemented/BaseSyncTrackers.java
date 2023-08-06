@@ -2,6 +2,7 @@ package com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.implemented;
 
 import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterSyncTrackerTypeEvent;
+import com.sekwah.sekclib.common.capabilitysync.tracker.implemented.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

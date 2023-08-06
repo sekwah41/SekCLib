@@ -2,11 +2,11 @@ package com.sekwah.sekclib.capabilitysync.capability;
 
 import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
-import com.sekwah.sekclib.capabilitysync.SyncEntry;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.CapabilitySyncRegistry;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.broadcaster.CapabilityBroadcaster;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.CapabilityTracker;
-import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.SyncTracker;
+import com.sekwah.sekclib.common.capabilitysync.SyncEntry;
+import com.sekwah.sekclib.common.capabilitysync.tracker.SyncTracker;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;

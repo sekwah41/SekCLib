@@ -1,6 +1,7 @@
-package com.sekwah.sekclib.capabilitysync;
+package com.sekwah.sekclib.common.capabilitysync;
 
-import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.SyncTrackerSerializer;
+
+import com.sekwah.sekclib.common.capabilitysync.tracker.SyncTrackerSerializer;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

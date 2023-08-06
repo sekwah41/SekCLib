@@ -1,4 +1,4 @@
-package com.sekwah.sekclib.capabilitysync.capabilitysync.tracker;
+package com.sekwah.sekclib.common.capabilitysync.tracker;
 
 import net.minecraft.network.FriendlyByteBuf;
 

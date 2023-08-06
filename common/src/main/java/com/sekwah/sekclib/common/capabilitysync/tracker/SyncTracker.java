@@ -1,6 +1,6 @@
-package com.sekwah.sekclib.capabilitysync.capabilitysync.tracker;
+package com.sekwah.sekclib.common.capabilitysync.tracker;
 
-import com.sekwah.sekclib.capabilitysync.SyncEntry;
+import com.sekwah.sekclib.common.capabilitysync.SyncEntry;
 
 import java.util.Objects;
 

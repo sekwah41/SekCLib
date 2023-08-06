@@ -1,5 +1,6 @@
 package com.sekwah.sekclib.capabilitysync;
 
+import com.sekwah.sekclib.common.capabilitysync.SyncEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 

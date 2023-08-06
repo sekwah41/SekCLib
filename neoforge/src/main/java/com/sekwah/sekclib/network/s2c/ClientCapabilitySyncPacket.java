@@ -2,11 +2,11 @@ package com.sekwah.sekclib.network.s2c;
 
 import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
-import com.sekwah.sekclib.capabilitysync.SyncEntry;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.broadcaster.CapabilityInfo;
-import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.ISyncTrackerData;
-import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.SyncTrackerData;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.SyncTrackerUpdater;
+import com.sekwah.sekclib.common.capabilitysync.SyncEntry;
+import com.sekwah.sekclib.common.capabilitysync.tracker.ISyncTrackerData;
+import com.sekwah.sekclib.common.capabilitysync.tracker.SyncTrackerData;
 import com.sekwah.sekclib.registries.SekCLibRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

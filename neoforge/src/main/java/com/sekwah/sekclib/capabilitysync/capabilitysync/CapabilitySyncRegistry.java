@@ -2,9 +2,9 @@ package com.sekwah.sekclib.capabilitysync.capabilitysync;
 
 import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
-import com.sekwah.sekclib.capabilitysync.SyncEntry;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.annotation.Sync;
-import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.SyncTrackerSerializer;
+import com.sekwah.sekclib.common.capabilitysync.SyncEntry;
+import com.sekwah.sekclib.common.capabilitysync.tracker.SyncTrackerSerializer;
 import com.sekwah.sekclib.registries.SekCLibRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;

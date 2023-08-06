@@ -4,7 +4,7 @@ import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
 import com.sekwah.sekclib.capabilitysync.capability.SyncDataCapabilityHandler;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.CapabilityTracker;
-import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.SyncTracker;
+import com.sekwah.sekclib.common.capabilitysync.tracker.SyncTracker;
 import com.sekwah.sekclib.network.SekCPacketHandler;
 import com.sekwah.sekclib.network.s2c.ClientCapabilitySyncPacket;
 import com.sekwah.sekclib.registries.SekCLibRegistries;

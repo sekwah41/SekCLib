@@ -1,6 +1,6 @@
-package com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.implemented;
+package com.sekwah.sekclib.common.capabilitysync.tracker.implemented;
 
-import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.SyncTrackerSerializer;
+import com.sekwah.sekclib.common.capabilitysync.tracker.SyncTrackerSerializer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 

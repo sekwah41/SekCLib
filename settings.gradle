@@ -2,8 +2,8 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         maven {
-            name = 'MinecraftForge'
-            url = 'https://maven.minecraftforge.net/'
+            name = 'NeoForge'
+            url = 'https://maven.neoforged.net/releases'
         }
         maven {
             name = 'Fabric'
@@ -19,5 +19,5 @@ plugins {
 include 'common'
 include 'fabric'
 include 'fabric-testmod'
-include 'forge'
-include 'forge-testmod'
+include 'neoforge'
+include 'neoforge-testmod'

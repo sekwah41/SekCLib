@@ -9,22 +9,24 @@ import org.apache.http.impl.client.HttpClients
 
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven {
+            name = 'NeoForge'
+            url = 'https://maven.neoforged.net/releases'
+        }
         maven { url = "https://repo.spongepowered.org/maven" }
         maven { url = "https://plugins.gradle.org/m2/" }
         mavenCentral()
     }
     dependencies {
-        classpath(group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true)
         classpath "org.apache.httpcomponents:httpmime:4.5.14"
     }
 }
 plugins {
     id "com.modrinth.minotaur" version "2.+"
     id "com.matthewprenger.cursegradle" version "1.4.0"
+    id 'net.neoforged.gradle' version '[6.0.13, 6.2)'
 }
 
-apply plugin: 'net.minecraftforge.gradle'
 apply plugin: "java"
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
@@ -95,7 +97,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
 
-            ideaModule "SekCLib.forge.main"
+            ideaModule "SekCLib.neoforge.main"
 
             //property 'mixin.env.remapRefMap', 'true'
             //property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
@@ -118,7 +120,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            ideaModule "SekCLib.forge.main"
+            ideaModule "SekCLib.neoforge.main"
 
             mods {
                 "${project.modid}" {
@@ -138,7 +140,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            ideaModule "SekCLib.forge.main"
+            ideaModule "SekCLib.neoforge.main"
 
             args '--mod', project.modid, '--all', '--output', file('src/generated/resources/')
 
@@ -162,7 +164,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.neoforged:forge:${minecraft_version}-${forge_version}"
 
     implementation project(":common")
 

@@ -9,7 +9,10 @@ import org.apache.http.impl.client.HttpClients
 
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven {
+            name = 'NeoForge'
+            url = 'https://maven.neoforged.net/releases'
+        }
         maven { url = "https://repo.spongepowered.org/maven" }
         //maven { url = 'https://sizableshrimp.me/maven' }
         maven { url = "https://plugins.gradle.org/m2/" }
@@ -17,12 +20,14 @@ buildscript {
     }
     dependencies {
         classpath "org.spongepowered:mixingradle:0.7+"
-        classpath(group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true)
         classpath "org.apache.httpcomponents:httpmime:4.5.14"
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle'
+plugins {
+    id 'net.neoforged.gradle' version '[6.0.13, 6.2)'
+}
+
 apply plugin: "java"
 apply plugin: 'eclipse'
 
@@ -102,7 +107,7 @@ minecraft {
             //property 'mixin.env.remapRefMap', 'true'
             //property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
-            ideaModule "SekCLib.forge-testmod.main"
+            ideaModule "SekCLib.neoforge-testmod.main"
 
             mods {
                 "${modid}" {
@@ -121,7 +126,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            ideaModule "SekCLib.forge-testmod.main"
+            ideaModule "SekCLib.neoforge-testmod.main"
 
             mods {
                 "${modid}" {
@@ -130,7 +135,7 @@ minecraft {
             }
         }
 
-        data {
+        /*data {
             workingDirectory project.file('run')
 
             // Recommended logging data for a userdev environment
@@ -140,7 +145,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            ideaModule "SekCLib.forge-testmod.main"
+            ideaModule "SekCLib.neoforge-testmod.main"
 
             args '--mod', modid, '--all', '--output', file('src/generated/resources/')
 
@@ -149,24 +154,24 @@ minecraft {
                     source sourceSets.main
                 }
             }
-        }
+        }*/
     }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    implementation project(path: ':forge')
+    implementation project(path: ':neoforge')
 
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.neoforged:forge:${minecraft_version}-${forge_version}"
 
     implementation 'org.spongepowered:mixin:0.8.5'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    implementation project(":forge")
+    implementation project(":neoforge")
 
 }
 

@@ -105,7 +105,7 @@ minecraft {
             mods {
                 "${project.modid}" {
                     source sourceSets.main
-                    source project(":common").sourceSets.main
+                    //source project(":common").sourceSets.main
                 }
             }
         }
@@ -159,6 +159,15 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
+
+
 dependencies {
 
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
@@ -166,7 +175,7 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.neoforged:forge:${minecraft_version}-${forge_version}"
 
-    implementation project(":common")
+    common(project(path: ":common", configuration: "namedElements"))
 
     //implementation 'org.spongepowered:mixin:0.8.5'
     //annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'

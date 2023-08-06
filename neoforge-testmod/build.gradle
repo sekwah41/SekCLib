@@ -115,7 +115,7 @@ minecraft {
                 }
                 "sekclib" {
                     source project(':neoforge').sourceSets.main
-                    source project(':common').sourceSets.main
+                    //source project(':common').sourceSets.main
                 }
             }
         }
@@ -136,10 +136,10 @@ minecraft {
                 "${modid}" {
                     source sourceSets.main
                 }
-                "sekclib" {
+                /*"sekclib" {
                     source project(':neoforge').sourceSets.main
-                    source project(':common').sourceSets.main
-                }
+                    //source project(':common').sourceSets.main
+                }*/
             }
         }
 

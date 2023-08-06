@@ -6,4 +6,5 @@ package com.sekwah.sekclib.common;
  * This should allow for use of the same code between the two versions.
  */
 public class SekCLibCommon {
+
 }

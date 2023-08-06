@@ -6,7 +6,9 @@ Fabric support is not currently planned at this time though once more features h
 
 ## Features
  * Capability @Sync annotations
- * 
+ * Cross loader helpers
+   * Network Registration 
+
 ## Utilities
 Not fully fledged features but just small utilities in the com.sekwah.util package I use between my mods.
 Not all are mentioned here but I will mention the main ones
@@ -24,6 +26,9 @@ Please contact us on our [discord](https://discord.sekwah.com/).
 While some of this mod will be entirely abstracted for cross loader use, others will use an interface then have a forge and fabric implementation.
 
 If there is anything you would like to see added please let me know either via discord or an issue on github.
+
+**While some features may not be consistent across loaders, the goal is to get as close as possible.**
+Any differences will be outlined on the common interface. And in some cases an equivalent may be provided on the other loader.
 
 # Mods Using The Library
 This list does not include every mod that is using the library, just the ones I know of.

@@ -7,4 +7,6 @@ package com.sekwah.sekclib.common;
  */
 public class SekCLibCommon {
 
+    public static final String MOD_ID = "sekclib";
+
 }

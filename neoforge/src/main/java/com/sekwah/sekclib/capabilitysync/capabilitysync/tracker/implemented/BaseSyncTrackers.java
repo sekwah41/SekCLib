@@ -2,13 +2,14 @@ package com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.implemented;
 
 import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterSyncTrackerTypeEvent;
+import com.sekwah.sekclib.common.SekCLibCommon;
 import com.sekwah.sekclib.common.capabilitysync.tracker.implemented.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = SekCLibForge.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = SekCLibCommon.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BaseSyncTrackers {
     @SubscribeEvent
     public static void registerSyncTrackerEvent(RegisterSyncTrackerTypeEvent event) {

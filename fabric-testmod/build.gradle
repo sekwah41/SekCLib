@@ -86,6 +86,7 @@ loom {
 }
 
 dependencies {
+    implementation project(path: ':common')
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
@@ -99,6 +100,8 @@ dependencies {
 
 
     modImplementation "com.terraformersmc:modmenu:7.1.0"
+
+    implementation project(":common-testmod")
 }
 
 processResources {

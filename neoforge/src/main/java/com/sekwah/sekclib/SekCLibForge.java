@@ -3,6 +3,7 @@ package com.sekwah.sekclib;
 import com.sekwah.sekclib.capabilitysync.capability.ISyncData;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterCapabilitySyncEvent;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterSyncTrackerTypeEvent;
+import com.sekwah.sekclib.common.SekCLibCommon;
 import com.sekwah.sekclib.network.SekCPacketHandler;
 import com.sekwah.sekclib.registries.SekCLibRegistries;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -14,10 +15,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(SekCLibForge.MOD_ID)
+@Mod(SekCLibCommon.MOD_ID)
 public class SekCLibForge {
-
-    public static final String MOD_ID = "sekclib";
 
     public static final Logger LOGGER = LogManager.getLogger("SekC Lib");
 

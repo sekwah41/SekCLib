@@ -112,10 +112,11 @@ minecraft {
             mods {
                 "${modid}" {
                     source sourceSets.main
+                    source project(':common-testmod').sourceSets.main
                 }
                 "sekclib" {
                     source project(':neoforge').sourceSets.main
-                    //source project(':common').sourceSets.main
+                    source project(':common').sourceSets.main
                 }
             }
         }
@@ -135,11 +136,12 @@ minecraft {
             mods {
                 "${modid}" {
                     source sourceSets.main
+                    source project(':common-testmod').sourceSets.main
                 }
-                /*"sekclib" {
+                "sekclib" {
                     source project(':neoforge').sourceSets.main
-                    //source project(':common').sourceSets.main
-                }*/
+                    source project(':common').sourceSets.main
+                }
             }
         }
 
@@ -168,6 +170,14 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
+
 dependencies {
 
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
@@ -179,6 +189,8 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation project(":neoforge")
+    common(project(path: ":common", configuration: "namedElements"))
+    common(project(path: ":common-testmod", configuration: "namedElements"))
 
 }
 

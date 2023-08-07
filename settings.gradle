@@ -17,6 +17,7 @@ plugins {
 }
 
 include 'common'
+include 'common-testmod'
 include 'fabric'
 include 'fabric-testmod'
 include 'neoforge'

@@ -2,6 +2,7 @@ package com.sekwah.sekclib.registries;
 
 import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
+import com.sekwah.sekclib.common.SekCLibCommon;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.NewRegistryEvent;
@@ -21,7 +22,7 @@ public class SekCLibRegistries {
      */
     public static void registerRegistries(NewRegistryEvent event) {
         RegistryBuilder<CapabilityEntry> capabilityEntries = new RegistryBuilder<>();
-        capabilityEntries.setName(new ResourceLocation(SekCLibForge.MOD_ID, "capability_sync"));
+        capabilityEntries.setName(new ResourceLocation(SekCLibCommon.MOD_ID, "capability_sync"));
         capabilityEntries.disableSaving();
 
         event.create(capabilityEntries, (registry) -> {

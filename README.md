@@ -36,11 +36,9 @@ The list of features being used may be out of date too.
 
 If you want to see example usage of the library, check out the mods below or the test projects within this repo.
 
-Examples of mods using this library:
+Examples of my mods using this library:
  * [Sekwah41's Naruto Mod](https://github.com/sekwah41/Naruto-Mod) (Forge) Uses:
    * Capability @Sync annotations
    * Additional Utilities
  * [Re:Skin](https://github.com/sekwah41/Re-Skin) (Forge) Uses: 
    * Capability @Sync annotations
- * [Blockbuster](https://github.com/Mineshinima/blockbuster) (Forge) Uses: 
-   * TBD - Currently in progress

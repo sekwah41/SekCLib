@@ -16,6 +16,9 @@ public class SekCLibTest {
     public static final String MOD_ID = "sekclibtest";
 
     public SekCLibTest() {
+
+        SekCLibTestCommon common = new SekCLibTestCommon();
+
         // You can do it this way or use a EventBusSubscriber that points to the MOD bus.
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         eventBus.addListener(this::registerCapabilities);

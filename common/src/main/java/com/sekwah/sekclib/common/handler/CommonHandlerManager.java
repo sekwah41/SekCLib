@@ -23,6 +23,7 @@ public class CommonHandlerManager {
     public static CommonHandlerManager getInstance() {
         if(INSTANCE == null) {
             // Done this because the HandlerManager was still null in dependencies construction both on forge and fabric.
+            // TODO find a better work around! :)
             try {
                 Class<?> clazz = Class.forName("com.sekwah.sekclib.handler.HandlerManager");
                 Method method = clazz.getMethod("init");

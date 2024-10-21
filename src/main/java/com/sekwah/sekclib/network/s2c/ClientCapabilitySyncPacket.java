@@ -84,8 +84,9 @@ public class ClientCapabilitySyncPacket {
             int trackerId = inBuffer.readByte();
             boolean hasData = inBuffer.readBoolean();
             SyncEntry tracker = capability.getSyncEntries().get(trackerId);
-            Object data = hasData ? tracker.getSerializer().decode(inBuffer) : null;
-            syncTrackerDataList.add(new SyncTrackerData(tracker, data));
+            if(hasData) {
+                syncTrackerDataList.add(new SyncTrackerData(tracker, tracker.getSerializer().decode(inBuffer)));
+            }
 
         }
         return syncTrackerDataList;

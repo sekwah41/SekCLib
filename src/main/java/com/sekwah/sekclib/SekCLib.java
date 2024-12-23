@@ -1,35 +1,28 @@
 package com.sekwah.sekclib;
 
+import com.mojang.logging.LogUtils;
 import com.sekwah.sekclib.capabilitysync.capability.ISyncData;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterCapabilitySyncEvent;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterSyncTrackerTypeEvent;
 import com.sekwah.sekclib.network.SekCPacketHandler;
 import com.sekwah.sekclib.registries.SekCLibRegistries;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoader;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import org.slf4j.Logger;
 
 @Mod(SekCLib.MOD_ID)
 public class SekCLib {
 
     public static final String MOD_ID = "sekclib";
 
-    public static final Logger LOGGER = LogManager.getLogger("SekC Lib");
+    public static final Logger LOGGER = LogUtils.getLogger();
 
-    public SekCLib() {
-
-        //ModLoadingContext loadingContext = ModLoadingContext.get();
-        //loadingContext.registerConfig(ModConfig.Type.COMMON, NarutoConfig.MOD_CONFIG, "naruto-mod.toml");
-
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        eventBus.addListener(this::registerCapabilities);
-        eventBus.addListener(this::setup);
-        eventBus.addListener(SekCLibRegistries::registerRegistries);
+    public SekCLib(IEventBus modEventBus, ModContainer modContainer) {
+        modEventBus.addListener(this::registerCapabilities);
+        modEventBus.addListener(this::setup);
+        modEventBus.addListener(SekCLibRegistries::registerRegistries);
 
     }
 

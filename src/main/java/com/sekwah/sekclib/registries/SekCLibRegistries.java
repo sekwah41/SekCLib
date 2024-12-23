@@ -2,14 +2,18 @@ package com.sekwah.sekclib.registries;
 
 import com.sekwah.sekclib.SekCLib;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.NewRegistryEvent;
-import net.minecraftforge.registries.RegistryBuilder;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
+import net.neoforged.neoforge.registries.RegistryBuilder;
 
 public class SekCLibRegistries {
 
-    public static ForgeRegistry<CapabilityEntry> CAPABILITY_REGISTRY;
+    public static final ResourceKey<Registry<CapabilityEntry>> CAPABILITY_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(SekCLib.MOD_ID, "capability_entry"));
+    public static Registry<CapabilityEntry> CAPABILITY_REGISTRY = new RegistryBuilder<>(CAPABILITY_REGISTRY_KEY)
+            .sync(true)
+            .create();
 
     /**
      * There may be a better way of doing this though this is to sync the id's between client and server

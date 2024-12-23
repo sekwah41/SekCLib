@@ -1,7 +1,7 @@
 package com.sekwah.sekclib.capabilitysync;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.capabilities.Capability;
+import net.neoforged.neoforge.capabilities.BaseCapability;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,19 +9,19 @@ import java.util.List;
 import java.util.Map;
 
 public class CapabilityEntry {
-    private final Capability<?> capability;
+    private final BaseCapability<?, ?> capability;
     private final Class clazz;
 
     private final List<SyncEntry> syncEntries = new ArrayList<>();
 
     private final Map<String, SyncEntry> syncEntryHashMap = new HashMap<>();
 
-    public CapabilityEntry(ResourceLocation resourceSyncName, Capability<?> capability, Class clazz) {
+    public CapabilityEntry(ResourceLocation resourceSyncName, BaseCapability<?, ?> capability, Class clazz) {
         this.capability = capability;
         this.clazz = clazz;
     }
 
-    public Capability<?> getCapability() {
+    public BaseCapability<?, ?> getCapability() {
         return capability;
     }
 

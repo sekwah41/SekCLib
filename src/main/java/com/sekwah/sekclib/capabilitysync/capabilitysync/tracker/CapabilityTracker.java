@@ -1,7 +1,7 @@
 package com.sekwah.sekclib.capabilitysync.capabilitysync.tracker;
 
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
-import net.minecraftforge.common.capabilities.Capability;
+import net.neoforged.neoforge.capabilities.BaseCapability;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class CapabilityTracker {
         return this.capabilityEntry;
     }
 
-    public Capability<?> getCapability() {
+    public BaseCapability<?, ?> getCapability() {
         return this.capabilityEntry.getCapability();
     }
 

@@ -6,7 +6,7 @@ license="MIT"
     modId="sekclib"
     version="${file.jarVersion}"
     displayName="SekC Lib"
-    updateJSONURL="https://www.sekwah.com/modversions/sekclib.json"
+    updateJSONURL="https://api.modrinth.com/updates/sekclib/forge_updates.json"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/sekclib"
     authors="Sekwah"
     description='''A library mod designed to make aspects of modding easier, in particular network syncing with clients.
@@ -25,6 +25,6 @@ Other features and utilities are also included.
 [[dependencies.sekclib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20,)"
+    versionRange="[1.21,)"
     ordering="NONE"
     side="BOTH"

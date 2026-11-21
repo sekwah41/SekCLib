@@ -11,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        loader: [ neoforge, fabric ]
-        release-task: [ discordupload ]
+        loader: [neoforge, fabric]
+        release-task: [discordupload]
     #if: ${{!startsWith(github.ref.split(’/’)[2], 'release-please')}}
     runs-on: ubuntu-latest
     # https://github.com/google-github-actions/release-please-action in case more config is needed
@@ -40,6 +40,4 @@ jobs:
         if: ${{ github.ref }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        run: |
-          # Build
-          ./gradlew :${{ matrix.loader }}:build :${{ matrix.loader }}:${{ matrix.release-task }}
+        run: ./gradlew :${{ matrix.loader }}:build :${{ matrix.loader }}:${{ matrix.release-task }}

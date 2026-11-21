@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 /**
- * Currently only designed for players though if there is demand we can add entity syncing too.
+ * Currently only designed for players, though if there is demand, we can add entity syncing too.
  *
  * Though entities should probably just use DataWatchers.
  */

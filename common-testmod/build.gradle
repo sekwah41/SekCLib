@@ -1,25 +1,18 @@
-
 plugins {
-    id 'fabric-loom' version '1.3-SNAPSHOT'
+    id 'java-library'
 }
 
-apply plugin: "java"
+group = rootProject.group
+version = rootProject.version
 
-group = project.package // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
 
 dependencies {
-    // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    implementation project(":common")
+    compileOnly project(path: ':', configuration: 'apiElements')
 }
 
-// these currently don't work. Re-enable them when forge is shipping with them again.
-/*mixin {
-    add sourceSets.main, "mixins.${project.modid}.refmap.json"
-}*/
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+}

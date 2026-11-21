@@ -1,0 +1,134 @@
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+
+def platformJarTask = rootProject.tasks.named(project.releaseJarTaskName, Jar)
+def uploadArtifacts = project.releaseAdditionalArtifacts ?: []
+def mavenArtifacts = project.mavenAdditionalArtifacts ?: []
+
+def releaseChangelog = providers.provider {
+    def changelog = rootProject.file('CHANGELOG.md')
+    if (!changelog.exists()) {
+        return ''
+    }
+
+    def sections = changelog.text.split(/\n## \[/)
+    sections.length > 1 ? "## [${sections[1]}" : changelog.text
+}
+
+tasks.named('build') {
+    dependsOn(platformJarTask)
+    dependsOn(uploadArtifacts)
+    dependsOn(mavenArtifacts)
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = rootProject.group
+            artifactId = project.releaseArtifactId
+            version = rootProject.version
+            artifact(platformJarTask)
+            mavenArtifacts.each { artifact(it) }
+            pom {
+                packaging = 'jar'
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = 's3://sekwah-maven/'
+            authentication {
+                awsIm(AwsImAuthentication)
+            }
+        }
+    }
+}
+
+tasks.named('curseforge') {
+    group = 'publishing'
+    description = "Publishes the ${project.releasePlatformName} artifact to CurseForge."
+    dependsOn(platformJarTask)
+    dependsOn(uploadArtifacts)
+    onlyIf { System.getenv('CURSE_API') != null }
+
+    apiToken = System.getenv('CURSE_API') ?: 'missing'
+    disableVersionDetection()
+
+    def mainFile = upload(project.curse_project_id, platformJarTask)
+        mainFile.changelog = releaseChangelog.get()
+    mainFile.changelogType = 'markdown'
+    mainFile.releaseType = 'release'
+    mainFile.addEnvironment('Client', 'Server')
+    project.releaseCurseLoaders.each { mainFile.addModLoader(it) }
+    project.game_versions.tokenize(',').each { mainFile.addGameVersion(it) }
+    uploadArtifacts.each { mainFile.withAdditionalFile(it) }
+}
+
+modrinth {
+    token = System.getenv('MODRINTH_TOKEN')
+    projectId = project.modrinth_slug
+    versionNumber = rootProject.version.toString()
+    versionName = "${rootProject.version} for ${project.releasePlatformName}"
+    versionType = 'release'
+    uploadFile = platformJarTask
+    additionalFiles = uploadArtifacts
+    gameVersions = project.game_versions.tokenize(',')
+    loaders = project.releaseModrinthLoaders
+    changelog = releaseChangelog.get()
+    syncBodyFrom = rootProject.file('README.md').text
+
+    if (project.releasePlatformName == 'Fabric') {
+        dependencies {
+            required.project('fabric-api')
+        }
+    }
+}
+
+tasks.named('modrinth') {
+    dependsOn(platformJarTask)
+    dependsOn(uploadArtifacts)
+    onlyIf { System.getenv('MODRINTH_TOKEN') != null }
+}
+
+tasks.register('discordupload') {
+    group = 'publishing'
+    description = "Uploads the ${project.releasePlatformName} artifact to Discord."
+    dependsOn(platformJarTask)
+    onlyIf { System.getenv('DISCORD_WEBHOOK') != null }
+
+    doLast {
+        def artifact = platformJarTask.get().archiveFile.get().asFile
+        def boundary = "SekCLib-${UUID.randomUUID()}"
+        def lineBreak = '\r\n'
+        def output = new ByteArrayOutputStream()
+        def writeText = { String value -> output.write(value.getBytes(StandardCharsets.UTF_8)) }
+        def isRelease = System.getenv('IS_RELEASE') == 'true'
+        def message = isRelease
+            ? "New release build\n```markdown\n${releaseChangelog.get()}\n```"
+            : 'New snapshot or testing build'
+        def escapedMessage = groovy.json.JsonOutput.toJson([content: message])
+
+        writeText("--${boundary}${lineBreak}")
+        writeText("Content-Disposition: form-data; name=\"payload_json\"${lineBreak}")
+        writeText("Content-Type: application/json${lineBreak}${lineBreak}")
+        writeText("${escapedMessage}${lineBreak}")
+        writeText("--${boundary}${lineBreak}")
+        writeText("Content-Disposition: form-data; name=\"files[0]\"; filename=\"${artifact.name}\"${lineBreak}")
+        writeText("Content-Type: application/java-archive${lineBreak}${lineBreak}")
+        Files.copy(artifact.toPath(), output)
+        writeText("${lineBreak}--${boundary}--${lineBreak}")
+
+        def request = HttpRequest.newBuilder(URI.create(System.getenv('DISCORD_WEBHOOK')))
+            .header('Content-Type', "multipart/form-data; boundary=${boundary}")
+            .POST(HttpRequest.BodyPublishers.ofByteArray(output.toByteArray()))
+            .build()
+        def response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new GradleException("Discord upload failed (${response.statusCode()}): ${response.body()}")
+        }
+    }
+}

@@ -5,14 +5,23 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import java.util.function.Supplier;
+
 
 /**
  * Tells the client that they should be moving and at what velocity
  */
-public class ClientVelocityPacket {
+public class ClientVelocityPacket implements CustomPacketPayload {
+
+    public static final Type<ClientVelocityPacket> TYPE = new Type<>(net.minecraft.resources.Identifier.fromNamespaceAndPath("sekclib", "client_velocity"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, ClientVelocityPacket> STREAM_CODEC = StreamCodec.of((buf, packet) -> encode(packet, buf), ClientVelocityPacket::decode);
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() { return TYPE; }
 
     private final int xa;
     private final int ya;
@@ -34,13 +43,13 @@ public class ClientVelocityPacket {
         this.za = (int)(d3 * 8000.0D);
     }
 
-    public static void encode(ClientVelocityPacket msg, FriendlyByteBuf outBuffer) {
+    public static void encode(ClientVelocityPacket msg, RegistryFriendlyByteBuf outBuffer) {
         outBuffer.writeShort(msg.xa);
         outBuffer.writeShort(msg.ya);
         outBuffer.writeShort(msg.za);
     }
 
-    public static ClientVelocityPacket decode(FriendlyByteBuf inBuffer) {
+    public static ClientVelocityPacket decode(RegistryFriendlyByteBuf inBuffer) {
         short x = inBuffer.readShort();
         short y = inBuffer.readShort();
         short z = inBuffer.readShort();
@@ -48,17 +57,15 @@ public class ClientVelocityPacket {
     }
 
     public static class Handler {
-        public static void handle(ClientVelocityPacket msg, Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
+        public static void handle(ClientVelocityPacket msg, IPayloadContext ctx) {
                 LocalPlayer player = Minecraft.getInstance().player;
                 if(player != null) {
                     if(msg.ya > 0) {
                         player.setOnGround(false);
                     }
-                    player.lerpMotion(msg.xa / 8000.0D, msg.ya / 8000.0D, msg.za / 8000.0D);
+                    player.setDeltaMovement(new Vec3(msg.xa / 8000.0D, msg.ya / 8000.0D, msg.za / 8000.0D));
                 }
-            });
-            ctx.get().setPacketHandled(true);
+
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.sekwah.sekclib.handler;
 
 import com.sekwah.sekclib.common.handler.ILoadingHandler;
-import net.minecraftforge.fml.loading.progress.ProgressMeter;
-import net.minecraftforge.fml.loading.progress.StartupNotificationManager;
+import net.neoforged.fml.loading.progress.ProgressMeter;
+import net.neoforged.fml.loading.progress.StartupNotificationManager;
 
 public class LoadingHandler implements ILoadingHandler {
 

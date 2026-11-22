@@ -1,33 +1,37 @@
 package com.sekwah.sekclib.registries;
 
-import com.sekwah.sekclib.SekCLibForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
-import com.sekwah.sekclib.common.SekCLibCommon;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.NewRegistryEvent;
-import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraft.resources.Identifier;
 
-public class SekCLibRegistries {
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-    public static ForgeRegistry<CapabilityEntry> CAPABILITY_REGISTRY;
+/** Stable runtime IDs for capability sync entries, shared in registration order by clients and servers. */
+public final class SekCLibRegistries {
+    private static final Map<Identifier, CapabilityEntry> BY_KEY = new LinkedHashMap<>();
+    private static final List<CapabilityEntry> BY_ID = new ArrayList<>();
 
-    /**
-     * There may be a better way of doing this though this is to sync the id's between client and server
-     * and allow for much shorter packets to be sent.
-     *
-     * Do not manually register to these registries, it will be handled all within SekCLib
-     *
-     * @param event
-     */
-    public static void registerRegistries(NewRegistryEvent event) {
-        RegistryBuilder<CapabilityEntry> capabilityEntries = new RegistryBuilder<>();
-        capabilityEntries.setName(new ResourceLocation(SekCLibCommon.MOD_ID, "capability_sync"));
-        capabilityEntries.disableSaving();
+    private SekCLibRegistries() {}
 
-        event.create(capabilityEntries, (registry) -> {
-            CAPABILITY_REGISTRY = (ForgeRegistry<CapabilityEntry>) registry;
-        }).get();
+    public static synchronized void register(Identifier key, CapabilityEntry entry) {
+        if (BY_KEY.containsKey(key)) {
+            throw new IllegalArgumentException("Duplicate capability sync entry: " + key);
+        }
+        BY_KEY.put(key, entry);
+        BY_ID.add(entry);
     }
 
+    public static synchronized CapabilityEntry getValue(int id) {
+        return BY_ID.get(id);
+    }
+
+    public static synchronized int getId(CapabilityEntry entry) {
+        return BY_ID.indexOf(entry);
+    }
+
+    public static synchronized List<CapabilityEntry> getValues() {
+        return List.copyOf(BY_ID);
+    }
 }

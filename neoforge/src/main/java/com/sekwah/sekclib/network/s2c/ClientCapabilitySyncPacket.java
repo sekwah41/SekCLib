@@ -1,6 +1,6 @@
 package com.sekwah.sekclib.network.s2c;
 
-import com.sekwah.sekclib.SekCLibForge;
+import com.sekwah.sekclib.SekCLibNeoForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.broadcaster.CapabilityInfo;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.SyncTrackerUpdater;
@@ -11,15 +11,17 @@ import com.sekwah.sekclib.registries.SekCLibRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * Structure
@@ -33,7 +35,13 @@ import java.util.function.Supplier;
  * boolean has data (not null) (if its null skip encoding & decoding)
  * (push to the tracker to handle the encoding and decoding)
  */
-public class ClientCapabilitySyncPacket {
+public class ClientCapabilitySyncPacket implements CustomPacketPayload {
+
+    public static final Type<ClientCapabilitySyncPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath("sekclib", "client_capability_sync"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, ClientCapabilitySyncPacket> STREAM_CODEC = StreamCodec.of((buf, packet) -> encode(packet, buf), ClientCapabilitySyncPacket::decode);
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() { return TYPE; }
 
     private final int entityId;
     public List<CapabilityInfo> capabilityData;
@@ -91,7 +99,7 @@ public class ClientCapabilitySyncPacket {
         return syncTrackerDataList;
     }
 
-    public static void encode(ClientCapabilitySyncPacket msg, FriendlyByteBuf outBuffer) {
+    public static void encode(ClientCapabilitySyncPacket msg, RegistryFriendlyByteBuf outBuffer) {
         outBuffer.writeInt(msg.entityId);
         outBuffer.writeInt(msg.capabilityData.size());
         for (CapabilityInfo capInfo : msg.capabilityData) {
@@ -105,14 +113,14 @@ public class ClientCapabilitySyncPacket {
         }
     }
 
-    public static ClientCapabilitySyncPacket decode(FriendlyByteBuf inBuffer) {
+    public static ClientCapabilitySyncPacket decode(RegistryFriendlyByteBuf inBuffer) {
 
         int playerId = inBuffer.readInt();
         int capCount = inBuffer.readInt();
         List<CapabilityInfo> capabilityInfoList = new ArrayList<>();
         for (int i = 0; i < capCount; i++) {
             int capId = inBuffer.readInt();
-            CapabilityEntry capability = SekCLibRegistries.CAPABILITY_REGISTRY.getValue(capId);
+            CapabilityEntry capability = SekCLibRegistries.getValue(capId);
             List<ISyncTrackerData> syncTrackers = decodeSyncTrackers(capability, inBuffer);
             if (!syncTrackers.isEmpty()) {
                 CapabilityInfo capInfo = new CapabilityInfo(capId, capability);
@@ -125,33 +133,29 @@ public class ClientCapabilitySyncPacket {
     }
 
     public static class Handler {
-        public static void handle(ClientCapabilitySyncPacket msg, Supplier<NetworkEvent.Context> ctx) {
-            NetworkEvent.Context context = ctx.get();
-            context.enqueueWork(() ->
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                    ClientLevel level = Minecraft.getInstance().level;
-                    Entity entity = level.getEntity(msg.entityId);
-                    if (entity instanceof LivingEntity livingEntity) {
-                        for (CapabilityInfo capInfo : msg.capabilityData) {
-                            livingEntity.getCapability(capInfo.capability.getCapability()).ifPresent(targetCap -> {
-                                List<SyncEntry> syncEntries = capInfo.capability.getSyncEntries();
-                                for (ISyncTrackerData syncTrackerData : capInfo.changedEntries) {
-                                    SyncEntry syncEntry = syncEntries.get(syncTrackerData.getSyncEntry().getTrackerId());
-                                    try {
-                                        Object syncValue = syncTrackerData.getSendValue();
-                                        if(syncTrackerData.getSyncEntry().getSerializer() instanceof SyncTrackerUpdater updater)   {
-                                            updater.updateTracker(syncValue, syncEntry.getGetter().invoke(targetCap));
-                                        }
-                                        syncEntry.getSetter().invoke(targetCap, syncValue);
-                                    } catch (Throwable e) {
-                                        SekCLibForge.LOGGER.error("There was a problem setting a value", e);
-                                    }
-                                }
-                            });
+        @SuppressWarnings({"rawtypes", "unchecked"})
+        public static void handle(ClientCapabilitySyncPacket msg, IPayloadContext context) {
+            ClientLevel level = Minecraft.getInstance().level;
+            if (level == null) return;
+            Entity entity = level.getEntity(msg.entityId);
+            if (!(entity instanceof LivingEntity livingEntity)) return;
+            for (CapabilityInfo capInfo : msg.capabilityData) {
+                Object targetCap = livingEntity.getCapability((net.neoforged.neoforge.capabilities.EntityCapability) capInfo.capability.getCapability(), null);
+                if (targetCap == null) continue;
+                List<SyncEntry> syncEntries = capInfo.capability.getSyncEntries();
+                for (ISyncTrackerData syncTrackerData : capInfo.changedEntries) {
+                    SyncEntry syncEntry = syncEntries.get(syncTrackerData.getSyncEntry().getTrackerId());
+                    try {
+                        Object syncValue = syncTrackerData.getSendValue();
+                        if (syncTrackerData.getSyncEntry().getSerializer() instanceof SyncTrackerUpdater updater) {
+                            updater.updateTracker(syncValue, syncEntry.getGetter().invoke(targetCap));
                         }
+                        syncEntry.getSetter().invoke(targetCap, syncValue);
+                    } catch (Throwable e) {
+                        SekCLibNeoForge.LOGGER.error("There was a problem setting a value", e);
                     }
-                }));
-            context.setPacketHandled(true);
+                }
+            }
         }
     }
 }

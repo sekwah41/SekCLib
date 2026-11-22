@@ -26,7 +26,6 @@ repositories {
     cloche {
         main()
         mavenFabric()
-        mavenForge()
     }
     maven {
         name = 'TerraformersMC'
@@ -59,90 +58,50 @@ Other features and utilities are also included.'''
         }
     }
 
-    common {
-        sourceSet.java.setSrcDirs(['common/src/main/java'])
-        sourceSet.resources.setSrcDirs(['common/src/main/resources'])
-        withSourcesJar()
-    }
+    singleTarget { target ->
+        target.fabric { fabric ->
+            fabric.loaderVersion = project.fabric_loader_version
+            fabric.includedClient()
 
-    fabric {
-        loaderVersion = project.fabric_loader_version
-        includedClient()
+            fabric.sourceSet.java.setSrcDirs(['common/src/main/java', 'fabric/src/main/java'])
+            fabric.sourceSet.resources.setSrcDirs(['common/src/main/resources', 'fabric/src/main/resources'])
+            fabric.sourceSet.resources.exclude('fabric.mod.json')
+            fabric.withSourcesJar()
 
-        sourceSet.java.setSrcDirs(['fabric/src/main/java'])
-        sourceSet.resources.setSrcDirs(['fabric/src/main/resources'])
-        sourceSet.resources.exclude('fabric.mod.json')
-        withSourcesJar()
-
-        metadata {
-            entrypoint('main', 'com.sekwah.sekclib.SekCLibFabric')
-            dependency {
-                modId = 'fabric-api'
-                version {
-                    start = project.fabric_version
+            fabric.metadata {
+                entrypoint('main', 'com.sekwah.sekclib.SekCLibFabric')
+                dependency {
+                    modId = 'fabric-api'
+                    version {
+                        start = project.fabric_version
+                    }
                 }
+                custom('modmenu', [badges: ['library']])
             }
-            custom('modmenu', [badges: ['library']])
-        }
 
-        dependencies {
-            fabricApi(project.fabric_api_version)
-            modLocalRuntime('com.terraformersmc:modmenu:7.1.0')
-        }
+            fabric.dependencies {
+                fabricApi(project.fabric_api_version)
+                modLocalRuntime('com.terraformersmc:modmenu:7.1.0')
+            }
 
-        runs {
-            client()
-            server()
-        }
-    }
-
-    forge {
-        loaderVersion = project.forge_version
-
-        // The legacy module is named "neoforge", but contains Forge 1.20.1 code.
-        sourceSet.java.setSrcDirs(['neoforge/src/main/java'])
-        sourceSet.resources.setSrcDirs(['neoforge/src/main/resources'])
-        sourceSet.resources.exclude('META-INF/mods.toml')
-        withSourcesJar()
-
-        metadata {
-            dependency {
-                modId = 'forge'
-                version {
-                    start = '46.0.1'
-                    end = '48'
-                    endExclusive = true
-                }
+            fabric.runs {
+                client()
+                server()
             }
         }
-
-        runs {
-            client()
-            server()
-        }
     }
-}
 
-// Forge loads fmlloader from its legacy classpath. Cloche 0.19.13 also remaps
-// it onto the regular runtime classpath, making ModLauncher resolve it twice.
-configurations.named('forgeRuntimeClasspath') {
-    exclude group: 'net.minecraftforge', module: 'fmlloader'
-}
-configurations.named('forgeLegacyClasspath') {
-    attributes.attribute(
-        org.gradle.api.attributes.Attribute.of('earth.terrarium.cloche.noNameMappingService', Boolean),
-        true
-    )
+
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.release = 17
 }
 
-// Cloche 0.19.13 does not currently wire its generated mapping archive into
-// every Fabric transform task when starting from a clean checkout.
-tasks.matching { it.name.startsWith('accessWidenFabric') }.configureEach {
-    dependsOn(tasks.named('generateFabricMappingsArtifact'))
+// Ensure Cloche has produced its mapping archive before remapping the common
+// Minecraft classes used by the Fabric target.
+tasks.matching { it.name == 'accessWidenCommonMinecraft' }.configureEach {
+    dependsOn(tasks.named('generateMappingsArtifact'))
 }
 
 def prepareFabricGeneratedResources = tasks.register('prepareFabricGeneratedResources') {
@@ -158,18 +117,6 @@ def prepareFabricGeneratedResources = tasks.register('prepareFabricGeneratedReso
 
 tasks.matching { it.name.startsWith('prepareRunFabric') }.configureEach {
     dependsOn(prepareFabricGeneratedResources)
-}
-
-// Forge 47.4's versioned-jar lookup also matches Cloche's client-extra name.
-// Put client-extra after the actual versioned Minecraft/Forge jar so each
-// lookup resolves to the intended file.
-tasks.named('writeForgeLegacyClasspath') {
-    doLast {
-        def classpathFile = output.get().asFile
-        def entries = classpathFile.readLines()
-        def clientExtra = entries.findAll { it.endsWith('-client-extra.jar') }
-        classpathFile.text = (entries - clientExtra + clientExtra).join(System.lineSeparator())
-    }
 }
 
 tasks.withType(Jar).configureEach {
@@ -196,5 +143,5 @@ publishing {
 }
 
 tasks.named('build') {
-    dependsOn(':fabric-testmod:build', ':neoforge-testmod:build')
+    dependsOn(':fabric-testmod:build', ':neoforge:build')
 }

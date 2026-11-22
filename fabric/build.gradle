@@ -20,7 +20,7 @@ def sourcesJar = tasks.register('srcJar', Jar) {
     from(rootProject.file('fabric/src/main/java'))
 }
 
-ext.releaseJarTaskName = 'fabricRemapJar'
+ext.releaseJarTaskName = 'remapJar'
 ext.releaseArtifactId = 'sekclib-fabric'
 ext.releasePlatformName = 'Fabric'
 ext.releaseCurseLoaders = ['Fabric']

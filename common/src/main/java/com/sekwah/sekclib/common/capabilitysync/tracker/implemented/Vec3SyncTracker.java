@@ -8,8 +8,8 @@ import net.minecraft.world.phys.Vec3;
  * Sync structure
  * boolean isNull
  * double posX
- * double posX
- * double posX
+ * double posY
+ * double posZ
  */
 public class Vec3SyncTracker implements SyncTrackerSerializer<Vec3> {
 

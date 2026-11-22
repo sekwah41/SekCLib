@@ -1,6 +1,6 @@
 package com.sekwah.sekclib.capabilitysync.capabilitysync.broadcaster;
 
-import com.sekwah.sekclib.SekCLibForge;
+import com.sekwah.sekclib.SekCLibNeoForge;
 import com.sekwah.sekclib.capabilitysync.CapabilityEntry;
 import com.sekwah.sekclib.capabilitysync.capability.SyncDataCapabilityHandler;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.CapabilityTracker;
@@ -9,114 +9,75 @@ import com.sekwah.sekclib.network.SekCPacketHandler;
 import com.sekwah.sekclib.network.s2c.ClientCapabilitySyncPacket;
 import com.sekwah.sekclib.registries.SekCLibRegistries;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.capabilities.Capability;
+import net.neoforged.neoforge.capabilities.EntityCapability;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Handle sending the capabilities to users.
- */
-public class CapabilityBroadcaster {
+public final class CapabilityBroadcaster {
+    private CapabilityBroadcaster() {}
 
-    /**
-     * Also tick the sync trackers to make sure the data is up to date and flag what should be sent.
-     *
-     * @param player
-     */
-    public static void checkCapData(LivingEntity player) {
-        player.getCapability(SyncDataCapabilityHandler.SYNC_DATA).ifPresent(syncData -> {
-            List<CapabilityTracker> capTrackers = syncData.getCapabilityTrackers();
-            for (CapabilityTracker capTracker : capTrackers) {
-                Capability<?> cap = capTracker.getCapability();
-                player.getCapability(cap).ifPresent(data -> {
-                    for (SyncTracker syncTracker : capTracker.getSyncTrackers()) {
-                        try {
-                            syncTracker.tick(data);
-                        } catch (Throwable e) {
-                            SekCLibForge.LOGGER.error("There was a problem updating a sync tracker", e);
-                        }
+    public static void checkCapData(LivingEntity entity) {
+        var syncData = entity.getCapability(SyncDataCapabilityHandler.SYNC_DATA, null);
+        if (syncData != null) {
+            for (CapabilityTracker tracker : syncData.getCapabilityTrackers()) {
+                Object data = getCapability(entity, tracker.getCapability());
+                if (data == null) continue;
+                for (SyncTracker syncTracker : tracker.getSyncTrackers()) {
+                    try {
+                        syncTracker.tick(data);
+                    } catch (Throwable e) {
+                        SekCLibNeoForge.LOGGER.error("There was a problem updating a sync tracker", e);
                     }
-                });
+                }
             }
-        });
+        }
+        broadcastCapChanges(entity, false);
+    }
 
-        broadcastCapChanges(player, false);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static Object getCapability(Entity entity, EntityCapability capability) {
+        return entity.getCapability(capability, null);
     }
 
     private static List<CapabilityInfo> collectEntries(LivingEntity entity, boolean returnAll) {
-        List<CapabilityInfo> capInfoList = new ArrayList<>();
-        entity.getCapability(SyncDataCapabilityHandler.SYNC_DATA).ifPresent(syncData -> {
-            List<CapabilityTracker> capTrackers = syncData.getCapabilityTrackers();
-            for (CapabilityTracker capTracker : capTrackers) {
-                CapabilityEntry capEntry = capTracker.getCapabilityEntry();
-                CapabilityInfo capInfo = new CapabilityInfo(SekCLibRegistries.CAPABILITY_REGISTRY.getID(capEntry), capEntry);
-                for (SyncTracker syncTracker : capTracker.getSyncTrackers()) {
-                    if ((returnAll || syncTracker.isMarkedForSend())) {
-                        if(syncTracker.getSyncEntry().isSyncGlobally()) {
-                            capInfo.changedEntries.add(syncTracker);
-                        } else {
-                            capInfo.changedPrivateEntries.add(syncTracker);
-                        }
-                    }
-                }
-                if(!capInfo.changedEntries.isEmpty() || !capInfo.changedPrivateEntries.isEmpty()) {
-                    capInfoList.add(capInfo);
+        List<CapabilityInfo> result = new ArrayList<>();
+        var syncData = entity.getCapability(SyncDataCapabilityHandler.SYNC_DATA, null);
+        if (syncData == null) return result;
+        for (CapabilityTracker tracker : syncData.getCapabilityTrackers()) {
+            CapabilityEntry entry = tracker.getCapabilityEntry();
+            CapabilityInfo info = new CapabilityInfo(SekCLibRegistries.getId(entry), entry);
+            for (SyncTracker syncTracker : tracker.getSyncTrackers()) {
+                if (returnAll || syncTracker.isMarkedForSend()) {
+                    if (syncTracker.getSyncEntry().isSyncGlobally()) info.changedEntries.add(syncTracker);
+                    else info.changedPrivateEntries.add(syncTracker);
                 }
             }
-        });
-        return capInfoList;
+            if (!info.changedEntries.isEmpty() || !info.changedPrivateEntries.isEmpty()) result.add(info);
+        }
+        return result;
     }
 
+    public static void broadcastCapability(Player tracked, Player receiver) {}
 
-    /**
-     * Send all the data about this player to another.
-     *
-     * @param tracked
-     * @param reciever
-     */
-    public static void broadcastCapability(Player tracked, Player reciever) {
-
-    }
-
-    /**
-     * Collect player
-     *
-     * @param entity - what player to get the data off to check the syncing.
-     */
     public static void broadcastCapChanges(LivingEntity entity, boolean sendAll) {
-
-        List<CapabilityInfo> dataToSend = collectEntries(entity, sendAll);
-
-        if(dataToSend.isEmpty()) {
-            return;
+        List<CapabilityInfo> data = collectEntries(entity, sendAll);
+        if (data.isEmpty()) return;
+        if (entity instanceof ServerPlayer serverPlayer) {
+            ClientCapabilitySyncPacket selfData = new ClientCapabilitySyncPacket(entity, data, true);
+            if (!selfData.capabilityData.isEmpty()) SekCPacketHandler.sendToPlayer(selfData, serverPlayer);
         }
-
-        if(entity instanceof ServerPlayer serverPlayer) { {
-            ClientCapabilitySyncPacket selfData = new ClientCapabilitySyncPacket(entity, dataToSend, true);
-            if(!selfData.capabilityData.isEmpty()) {
-                SekCPacketHandler.sendToPlayer(selfData, serverPlayer);
-            }
-        }}
-
-        ClientCapabilitySyncPacket forOthers = new ClientCapabilitySyncPacket(entity, dataToSend, false);
-        if(!forOthers.capabilityData.isEmpty()) {
-            SekCPacketHandler.sendToTracking(forOthers, entity);
-        }
-
+        ClientCapabilitySyncPacket others = new ClientCapabilitySyncPacket(entity, data, false);
+        if (!others.capabilityData.isEmpty()) SekCPacketHandler.sendToTracking(others, entity);
     }
 
     public static void broadcastCapToPlayer(LivingEntity entity, ServerPlayer player) {
-        List<CapabilityInfo> dataToSend = collectEntries(entity, true);
-
-        if(dataToSend.isEmpty()) {
-            return;
-        }
-        ClientCapabilitySyncPacket forOthers = new ClientCapabilitySyncPacket(entity, dataToSend, false);
-        if(!forOthers.capabilityData.isEmpty()) {
-            SekCPacketHandler.sendToPlayer(forOthers, player);
-        }
+        List<CapabilityInfo> data = collectEntries(entity, true);
+        if (data.isEmpty()) return;
+        ClientCapabilitySyncPacket packet = new ClientCapabilitySyncPacket(entity, data, false);
+        if (!packet.capabilityData.isEmpty()) SekCPacketHandler.sendToPlayer(packet, player);
     }
 }

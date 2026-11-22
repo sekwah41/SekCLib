@@ -1,9 +1,9 @@
 package com.sekwah.sekclib.capabilitysync.capabilitysync;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.event.IModBusEvent;
+import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.capabilities.EntityCapability;
+import net.neoforged.bus.api.Event;
+import net.neoforged.fml.event.IModBusEvent;
 
 public class RegisterCapabilitySyncEvent extends Event implements IModBusEvent {
 
@@ -13,7 +13,7 @@ public class RegisterCapabilitySyncEvent extends Event implements IModBusEvent {
      * @param capability - The capability to pull the data from.
      * @param clazz - The class to pull the annotation data from.
      */
-    public void registerPlayerCap(ResourceLocation resourceSyncName, Capability<?> capability, Class<?> clazz) {
+    public void registerPlayerCap(Identifier resourceSyncName, EntityCapability<?, ?> capability, Class<?> clazz) {
         CapabilitySyncRegistry.registerPlayerCap(resourceSyncName, capability, clazz);
     }
 

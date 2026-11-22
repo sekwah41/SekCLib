@@ -1,118 +1,31 @@
 plugins {
-    id 'earth.terrarium.cloche'
+    id 'net.neoforged.moddev'
 }
 
 group = rootProject.group
 version = rootProject.version
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
 }
 
-repositories {
-    cloche.librariesMinecraft()
-    mavenCentral()
-    cloche {
-        main()
-        mavenForge()
+sourceSets.main.java.srcDirs = [rootProject.file('common-testmod/src/main/java'), rootProject.file('neoforge-testmod/src/main/java')]
+sourceSets.main.resources.srcDirs = [rootProject.file('common-testmod/src/main/resources'), rootProject.file('neoforge-testmod/src/main/resources')]
+sourceSets.main.resources.exclude('META-INF/mods.toml')
+
+neoForge {
+    version = rootProject.neoforge_version
+    runs {
+        client { client() }
+        server { server() }
+    }
+    mods {
+        sekclibtest { sourceSet sourceSets.main }
     }
 }
 
-cloche {
-    minecraftVersion = project.minecraft_version
-
-    metadata {
-        modId = 'sekclibtest'
-        name = 'SekC Lib Test Mod'
-        description = 'A test mod for SekCLib'
-        license = 'MIT'
-        url = 'https://sekclib.sekwah.com/'
-        issues = "${project.github}/issues"
-        sources = project.github
-        author('Sekwah')
-
-        dependency {
-            modId = 'sekclib'
-            version {
-                start = '1.0.0'
-            }
-        }
-
-        dependency {
-            modId = 'minecraft'
-            version {
-                start = '1.20'
-                end = '1.21'
-                endExclusive = true
-            }
-        }
-    }
-
-    singleTarget { target ->
-        target.forge { forge ->
-            forge.loaderVersion = project.forge_version
-
-            forge.sourceSet.java.srcDir(rootProject.file('common-testmod/src/main/java'))
-            forge.sourceSet.resources.srcDir(rootProject.file('common-testmod/src/main/resources'))
-            forge.sourceSet.resources.exclude('META-INF/mods.toml')
-            forge.sourceSet.resources.exclude('mixins.sekclibtest.json')
-            forge.mixins.from(file('src/main/resources/mixins.sekclibtest.json'))
-
-            forge.dependencies {
-                implementation.add(project(':'))
-                compileOnly('org.jetbrains:annotations:24.1.0')
-            }
-
-            forge.metadata {
-                dependency {
-                    modId = 'forge'
-                    version {
-                        start = '46.0.1'
-                        end = '48'
-                        endExclusive = true
-                    }
-                }
-            }
-
-            forge.runs {
-                client()
-                server()
-            }
-        }
-    }
+dependencies {
+    implementation project(':neoforge')
 }
 
-configurations.named('runtimeClasspath') {
-    exclude group: 'net.minecraftforge', module: 'fmlloader'
-}
-configurations.named('legacyClasspath') {
-    attributes.attribute(
-        org.gradle.api.attributes.Attribute.of('earth.terrarium.cloche.noNameMappingService', Boolean),
-        true
-    )
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.release = 17
-}
-
-def prepareRunDirectory = tasks.register('prepareRunDirectory') {
-    def runDirectory = layout.projectDirectory.dir('run')
-    outputs.dir(runDirectory)
-    doLast {
-        runDirectory.asFile.mkdirs()
-    }
-}
-
-tasks.matching { it.name.startsWith('prepareRun') && it.name != 'prepareRunDirectory' }.configureEach {
-    dependsOn(prepareRunDirectory)
-}
-
-tasks.named('writeLegacyClasspath') {
-    doLast {
-        def classpathFile = output.get().asFile
-        def entries = classpathFile.readLines()
-        def clientExtra = entries.findAll { it.endsWith('-client-extra.jar') }
-        classpathFile.text = (entries - clientExtra + clientExtra).join(System.lineSeparator())
-    }
-}
+tasks.withType(JavaCompile).configureEach { options.release = 25 }

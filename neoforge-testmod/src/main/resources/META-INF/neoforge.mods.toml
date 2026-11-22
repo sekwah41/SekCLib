@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mixins]]
+config="mixins.sekclibtest.json"
+
+[[mods]]
+modId="sekclibtest"
+version="${file.jarVersion}"
+displayName="SekC Lib Test"
+authors="Sekwah"
+description='''A mod used to test SekC Lib.'''
+
+[[dependencies.sekclibtest]]
+modId="neoforge"
+type="required"
+versionRange="[26.3,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.sekclibtest]]
+modId="minecraft"
+type="required"
+versionRange="[26.3,26.4)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.sekclibtest]]
+modId="sekclib"
+type="required"
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"

@@ -1,42 +1,56 @@
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
 plugins {
+    id 'net.neoforged.moddev'
     id 'base'
     id 'maven-publish'
     id 'com.modrinth.minotaur'
     id 'net.darkhax.curseforgegradle'
 }
 
-tasks.register('curseforge', TaskPublishCurseForge)
-
 group = rootProject.group
 version = rootProject.version
 
-def rootForgeJar = rootProject.tasks.named('forgeJar', Jar)
+tasks.register('curseforge', TaskPublishCurseForge)
 
-def sourcesJar = tasks.register('srcJar', Jar) {
-    archiveBaseName = "${project.archive}${project.mc_label}-forge"
-    archiveVersion = rootProject.version
-    archiveClassifier = 'sources'
-    from(rootProject.file('common/src/main/java'))
-    from(rootProject.file('neoforge/src/main/java'))
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    withSourcesJar()
 }
 
-def deobfJar = tasks.register('deobfJar', Jar) {
-    dependsOn(rootForgeJar)
-    archiveBaseName = "${project.archive}${project.mc_label}-forge"
-    archiveVersion = rootProject.version
-    archiveClassifier = 'deobf'
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from({ zipTree(rootForgeJar.get().archiveFile.get().asFile) })
+sourceSets.main.java.srcDirs = [rootProject.file('common-neoforge/src/main/java'), rootProject.file('neoforge/src/main/java')]
+sourceSets.main.resources.srcDirs = [rootProject.file('common-neoforge/src/main/resources'), rootProject.file('neoforge/src/main/resources')]
+
+neoForge {
+    version = "${rootProject.neoforge_version}"
+    runs {
+        client { client() }
+        server { server() }
+    }
+    mods {
+        sekclib { sourceSet sourceSets.main }
+    }
 }
 
-ext.releaseJarTaskName = 'forgeRemapJar'
-ext.releaseArtifactId = 'sekclib-forge'
-ext.releasePlatformName = 'Forge'
-ext.releaseCurseLoaders = ['Forge', 'NeoForge']
-ext.releaseModrinthLoaders = ['forge', 'neoforge']
-ext.releaseAdditionalArtifacts = [sourcesJar, deobfJar]
-ext.mavenAdditionalArtifacts = [sourcesJar]
+tasks.withType(JavaCompile).configureEach { options.release = 25 }
+
+
+tasks.named('jar') {
+    archiveBaseName = "${rootProject.archive}${rootProject.neoforge_mc_label}-neoforge"
+    from(rootProject.file('LICENSE')) { rename { "${it}_${rootProject.archive}" } }
+}
+
+tasks.named('sourcesJar') {
+    archiveBaseName = "${rootProject.archive}${rootProject.neoforge_mc_label}-neoforge"
+}
+
+ext.releaseJarTaskName = 'jar'
+ext.releaseArtifactId = 'sekclib-neoforge'
+ext.releasePlatformName = 'NeoForge'
+ext.releaseCurseLoaders = ['NeoForge']
+ext.releaseModrinthLoaders = ['neoforge']
+ext.releaseAdditionalArtifacts = [tasks.named('sourcesJar')]
+ext.mavenAdditionalArtifacts = [tasks.named('sourcesJar')]
+ext.game_versions = rootProject.neoforge_game_versions
 
 apply from: rootProject.file('gradle/platform-publishing.gradle')

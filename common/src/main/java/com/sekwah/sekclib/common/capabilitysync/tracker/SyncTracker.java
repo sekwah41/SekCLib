@@ -7,9 +7,9 @@ import java.util.Objects;
 /**
  * For tracking the specific data entry. This will contain the main logic,
  * though each supported type should have its own special sync tracker.
- *
+ * <p>
  * It will also contain the logic on how to add and remove the data from the packet.
- *
+ * <p>
  * If you are going to add tracker types that are not custom classes please consider making a pr to the main library.
  */
 public class SyncTracker implements ISyncTrackerData {
@@ -34,14 +34,15 @@ public class SyncTracker implements ISyncTrackerData {
 
     /**
      * Update the ticks left and clear any info on if it should be sent this tick.
+     *
      * @param data
      */
     public void tick(Object data) throws Throwable {
-        if(--this.minTicksLeft <= 0) {
+        if (--this.minTicksLeft <= 0) {
             Object currentData = syncEntry.getGetter().invoke(data);
-            if(this.shouldSend(currentData)) {
+            if (this.shouldSend(currentData)) {
                 this.markedForSend = true;
-                if(syncEntry.getSerializer() instanceof SyncTrackerClone cloner) {
+                if (syncEntry.getSerializer() instanceof SyncTrackerClone cloner) {
                     this.sendValue = cloner.clone(currentData);
                 } else {
                     this.sendValue = currentData;
@@ -55,6 +56,14 @@ public class SyncTracker implements ISyncTrackerData {
         }
     }
 
+    /** Capture the live value for a full resync without altering the tick schedule. */
+    public void captureCurrent(Object data) throws Throwable {
+        Object currentData = syncEntry.getGetter().invoke(data);
+        this.sendValue = syncEntry.getSerializer() instanceof SyncTrackerClone cloner
+                ? cloner.clone(currentData)
+                : currentData;
+    }
+
     public SyncEntry getSyncEntry() {
         return this.syncEntry;
     }
@@ -66,6 +75,7 @@ public class SyncTracker implements ISyncTrackerData {
 
     /**
      * This will only be called when the minTicks has passed.
+     *
      * @param currentValue - The current server side value
      * @return
      */

@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 /**
  * For now these can only be primitives and strings.
  * Make sure that the Capabilities are not registered on EventPriority.LOWEST so that SekCLib can find it.
- *
+ * <p>
  * Ensure that the same class is client and server side. If there are miss-matched parameters with @Sync the game will likely crash.
- *
+ * <p>
  * These will have to be public due to setAccessible being disabled
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -22,6 +22,7 @@ public @interface Sync {
     /**
      * Should this be synced with other players
      * TODO check if the player is spectating another player and send the data. This will sync UI while in spectator mode.
+     *
      * @return
      */
     boolean syncGlobally() default false;

@@ -21,15 +21,16 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public final class SyncDataCapabilityHandler {
     public static final EntityCapability<ISyncData, Void> SYNC_DATA = EntityCapability.createVoid(
             Identifier.fromNamespaceAndPath(SekCLibCommon.MOD_ID, "sync_data"), ISyncData.class);
     private static final Map<Entity, SyncData> SYNC_DATA_BY_ENTITY = new HashMap<>();
 
-    private SyncDataCapabilityHandler() {}
+    private SyncDataCapabilityHandler() {
+    }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {

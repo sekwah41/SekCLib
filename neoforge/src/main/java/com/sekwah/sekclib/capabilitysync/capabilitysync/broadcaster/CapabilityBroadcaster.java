@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class CapabilityBroadcaster {
-    private CapabilityBroadcaster() {}
+    private CapabilityBroadcaster() {
+    }
 
     public static void checkCapData(LivingEntity entity) {
         var syncData = entity.getCapability(SyncDataCapabilityHandler.SYNC_DATA, null);
@@ -50,7 +51,15 @@ public final class CapabilityBroadcaster {
         for (CapabilityTracker tracker : syncData.getCapabilityTrackers()) {
             CapabilityEntry entry = tracker.getCapabilityEntry();
             CapabilityInfo info = new CapabilityInfo(SekCLibRegistries.getId(entry), entry);
+            Object capability = getCapability(entity, tracker.getCapability());
             for (SyncTracker syncTracker : tracker.getSyncTrackers()) {
+                if (returnAll && capability != null) {
+                    try {
+                        syncTracker.captureCurrent(capability);
+                    } catch (Throwable e) {
+                        SekCLibNeoForge.LOGGER.error("There was a problem capturing a sync tracker for a full resync", e);
+                    }
+                }
                 if (returnAll || syncTracker.isMarkedForSend()) {
                     if (syncTracker.getSyncEntry().isSyncGlobally()) info.changedEntries.add(syncTracker);
                     else info.changedPrivateEntries.add(syncTracker);
@@ -61,7 +70,8 @@ public final class CapabilityBroadcaster {
         return result;
     }
 
-    public static void broadcastCapability(Player tracked, Player receiver) {}
+    public static void broadcastCapability(Player tracked, Player receiver) {
+    }
 
     public static void broadcastCapChanges(LivingEntity entity, boolean sendAll) {
         List<CapabilityInfo> data = collectEntries(entity, sendAll);

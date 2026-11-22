@@ -20,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntityRenderer.class)
 public class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingEntityRenderState, M extends EntityModel<? super S>> {
 
-    @Shadow protected M model;
+    @Shadow
+    protected M model;
     private Identifier diamond = Identifier.fromNamespaceAndPath(SekCLibTest.MOD_ID, "textures/entity/diamond_block.png");
 
     @Inject(method = "getRenderType", at = @At("HEAD"), cancellable = true)

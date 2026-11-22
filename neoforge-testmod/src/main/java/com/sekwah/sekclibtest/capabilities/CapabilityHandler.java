@@ -19,7 +19,8 @@ public final class CapabilityHandler {
             Identifier.fromNamespaceAndPath(SekCLibTest.MOD_ID, "diamond_data"), IDiamondData.class);
     private static final Map<Entity, DiamondData> DATA = new HashMap<>();
 
-    private CapabilityHandler() {}
+    private CapabilityHandler() {
+    }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         registerEntityCapability(event);

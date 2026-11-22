@@ -14,7 +14,7 @@ import java.util.*;
 
 /**
  * Currently only designed for players, though if there is demand, we can add entity syncing too.
- *
+ * <p>
  * Though entities should probably just use DataWatchers.
  */
 public class CapabilitySyncRegistry {
@@ -23,7 +23,7 @@ public class CapabilitySyncRegistry {
 
     /**
      * @param capability the capability to process
-     * @param clazz so that the fields can be pre-grabbed.
+     * @param clazz      so that the fields can be pre-grabbed.
      */
     @SuppressWarnings("squid:S3011")
     static void registerPlayerCap(Identifier resourceSyncName, EntityCapability<?, ?> capability, Class<?> clazz) {
@@ -36,14 +36,14 @@ public class CapabilitySyncRegistry {
         int trackerId = 0;
         for (Field field : values) {
             Sync sync = field.getAnnotation(Sync.class);
-            if(!CLASS_SYNC_TRACKER_SERIALIZER.containsKey(field.getType())) {
+            if (!CLASS_SYNC_TRACKER_SERIALIZER.containsKey(field.getType())) {
                 String message = String.format("@Sync used on unsupported type %s. (Class: %s, Field: %s)", field.getType().getName(), clazz.getName(), field.getName());
                 SekCLibNeoForge.LOGGER.error(message);
                 errors.add(message);
             }
             try {
                 field.setAccessible(true);
-            } catch(UnsupportedOperationException e) {
+            } catch (UnsupportedOperationException e) {
                 String message = String.format("Failed to set field accessible. (Class: %s, Field: %s)", clazz.getName(), field.getName());
                 SekCLibNeoForge.LOGGER.error(message);
                 errors.add(message);
@@ -58,7 +58,7 @@ public class CapabilitySyncRegistry {
                 errors.add(message);
             }
         }
-        if(!errors.isEmpty()) {
+        if (!errors.isEmpty()) {
             throw new IllegalStateException(String.join("\n", errors));
         }
     }
@@ -70,7 +70,6 @@ public class CapabilitySyncRegistry {
     public static SyncTrackerSerializer getTrackerSerializer(Class clazz) {
         return CLASS_SYNC_TRACKER_SERIALIZER.get(clazz);
     }
-
 
 
     /**

@@ -16,19 +16,26 @@
   "entrypoints": {
     "main": [
       "com.sekwah.sekclib.SekCLibFabric"
+    ],
+    "client": [
+      "com.sekwah.sekclib.FabricClientNetworking"
     ]
   },
   "depends": {
     "fabricloader": ">=0.14.21",
     "minecraft": ">=1.20",
     "java": ">=17",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "cardinal-components-base": "*",
+    "cardinal-components-entity": "*"
   },
   "suggests": {
   },
   "custom": {
     "modmenu": {
-      "badges": [ "library" ]
+      "badges": [
+        "library"
+      ]
     }
   }
 }

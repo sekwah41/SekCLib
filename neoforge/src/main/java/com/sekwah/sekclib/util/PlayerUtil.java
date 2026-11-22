@@ -1,4 +1,5 @@
 package com.sekwah.sekclib.util;
+
 import com.sekwah.sekclib.network.SekCPacketHandler;
 import com.sekwah.sekclib.network.s2c.ClientVelocityPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -10,21 +11,21 @@ public class PlayerUtil {
 
     /**
      * Sets the player velocity and also sends it to the client.
-     *
+     * <p>
      * If the velocity is positive in the y it will also set on ground to false which avoid the ground reducing speed.
      *
-     * @param player effected player
-     * @param velocity vector to set
+     * @param player       effected player
+     * @param velocity     vector to set
      * @param ignoreGround if the client should ignore the ground when the velocity is set avoiding initial drag
      */
     public static void setVelocity(Player player, Vec3 velocity, boolean ignoreGround) {
         player.setDeltaMovement(velocity);
-        if(velocity.y > 0) {
+        if (velocity.y > 0) {
             player.fallDistance = 0;
         }
         Vec3 ap = player.getDeltaMovement();
-        if(player instanceof ServerPlayer serverPlayer) {
-            if(ignoreGround) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (ignoreGround) {
                 SekCPacketHandler.sendToPlayer(new ClientVelocityPacket(ap), serverPlayer);
             } else {
                 serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(player.getId(), ap));
@@ -35,10 +36,10 @@ public class PlayerUtil {
     /**
      * Another way to call {@link PlayerUtil#setVelocity(Player, Vec3, boolean)}
      *
-     * @param player effected player
-     * @param x x velocity
-     * @param y y velocity
-     * @param z z velocity
+     * @param player       effected player
+     * @param x            x velocity
+     * @param y            y velocity
+     * @param z            z velocity
      * @param ignoreGround if the client should ignore the ground when the velocity is set avoiding initial drag
      */
     public static void setVelocity(Player player, double x, double y, double z, boolean ignoreGround) {

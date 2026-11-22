@@ -4,5 +4,6 @@ import com.sekwah.sekclib.common.capabilitysync.SyncEntry;
 
 public interface ISyncTrackerData {
     SyncEntry getSyncEntry();
+
     Object getSendValue();
 }

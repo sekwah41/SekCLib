@@ -8,12 +8,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Stable runtime IDs for capability sync entries, shared in registration order by clients and servers. */
+/**
+ * Stable runtime IDs for capability sync entries, shared in registration order by clients and servers.
+ */
 public final class SekCLibRegistries {
     private static final Map<Identifier, CapabilityEntry> BY_KEY = new LinkedHashMap<>();
     private static final List<CapabilityEntry> BY_ID = new ArrayList<>();
 
-    private SekCLibRegistries() {}
+    private SekCLibRegistries() {
+    }
 
     public static synchronized void register(Identifier key, CapabilityEntry entry) {
         if (BY_KEY.containsKey(key)) {

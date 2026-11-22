@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Currently fabric does not have a progress bar or loading progress of any kind. Possibly add it?
- *
+ * <p>
  * If there are any mods that implement this please open a ticket, and we could possibly add support for it.
  */
 class LoadingHandler implements ILoadingHandler {

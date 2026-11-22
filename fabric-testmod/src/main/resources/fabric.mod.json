@@ -16,6 +16,9 @@
   "entrypoints": {
     "main": [
       "com.sekwah.sekclibtestmod.SekCLibTest"
+    ],
+    "cardinal-components": [
+      "com.sekwah.sekclibtestmod.capabilities.TestComponents"
     ]
   },
   "depends": {
@@ -26,6 +29,11 @@
     "sekclib": "1.x"
   },
   "suggests": {
+  },
+  "custom": {
+    "cardinal-components": [
+      "sekclibtest:diamond_data"
+    ]
   },
   "mixins": [
     "mixins.sekclibtest.json"

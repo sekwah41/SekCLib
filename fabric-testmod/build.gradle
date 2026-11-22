@@ -69,16 +69,28 @@ cloche {
 
             fabric.metadata {
                 entrypoint('main', 'com.sekwah.sekclibtestmod.SekCLibTest')
+                entrypoint('cardinal-components', 'com.sekwah.sekclibtestmod.capabilities.TestComponents')
+                custom('cardinal-components', ['sekclibtest:diamond_data'])
                 dependency {
                     modId = 'fabric-api'
                     version {
                         start = project.fabric_version
                     }
                 }
+                dependency {
+                    modId = 'cardinal-components-base'
+                    version { start = project.cca_version }
+                }
+                dependency {
+                    modId = 'cardinal-components-entity'
+                    version { start = project.cca_version }
+                }
             }
 
             fabric.dependencies {
                 modImplementation(project(':'))
+                modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}")
+                modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
                 fabricApi(project.fabric_api_version)
                 modLocalRuntime('com.terraformersmc:modmenu:7.2.2')
             }
@@ -101,8 +113,8 @@ tasks.matching { it.name.startsWith('accessWiden') }.configureEach {
 
 def prepareGeneratedResources = tasks.register('prepareGeneratedResources') {
     def generatedDirectories = [
-        layout.buildDirectory.dir('generated/resources/main'),
-        layout.buildDirectory.dir('generated/resources/client')
+            layout.buildDirectory.dir('generated/resources/main'),
+            layout.buildDirectory.dir('generated/resources/client')
     ]
     outputs.dirs(generatedDirectories)
     doLast {

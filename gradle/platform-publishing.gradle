@@ -1,4 +1,3 @@
-import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
@@ -59,7 +58,7 @@ tasks.named('curseforge') {
     disableVersionDetection()
 
     def mainFile = upload(project.curse_project_id, platformJarTask)
-        mainFile.changelog = releaseChangelog.get()
+    mainFile.changelog = releaseChangelog.get()
     mainFile.changelogType = 'markdown'
     mainFile.releaseType = 'release'
     mainFile.addEnvironment('Client', 'Server')
@@ -108,8 +107,8 @@ tasks.register('discordupload') {
         def writeText = { String value -> output.write(value.getBytes(StandardCharsets.UTF_8)) }
         def isRelease = System.getenv('IS_RELEASE') == 'true'
         def message = isRelease
-            ? "New release build\n```markdown\n${releaseChangelog.get()}\n```"
-            : 'New snapshot or testing build'
+                ? "New release build\n```markdown\n${releaseChangelog.get()}\n```"
+                : 'New snapshot or testing build'
         def escapedMessage = groovy.json.JsonOutput.toJson([content: message])
 
         writeText("--${boundary}${lineBreak}")
@@ -123,9 +122,9 @@ tasks.register('discordupload') {
         writeText("${lineBreak}--${boundary}--${lineBreak}")
 
         def request = HttpRequest.newBuilder(URI.create(System.getenv('DISCORD_WEBHOOK')))
-            .header('Content-Type', "multipart/form-data; boundary=${boundary}")
-            .POST(HttpRequest.BodyPublishers.ofByteArray(output.toByteArray()))
-            .build()
+                .header('Content-Type', "multipart/form-data; boundary=${boundary}")
+                .POST(HttpRequest.BodyPublishers.ofByteArray(output.toByteArray()))
+                .build()
         def response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
             throw new GradleException("Discord upload failed (${response.statusCode()}): ${response.body()}")

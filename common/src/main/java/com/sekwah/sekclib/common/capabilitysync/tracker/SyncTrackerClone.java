@@ -6,6 +6,7 @@ package com.sekwah.sekclib.common.capabilitysync.tracker;
 
 /**
  * This is for where the updates may keep references to old versions and will always be equal unless this exists.
+ *
  * @param <T>
  */
 public interface SyncTrackerClone<T> {

@@ -1,26 +1,26 @@
-modLoader="javafml"
-loaderVersion="[1,)"
-license="MIT"
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "MIT"
 
 [[mods]]
-modId="sekclib"
-version="${file.jarVersion}"
-displayName="SekC Lib"
-authors="Sekwah"
-description='''A library mod designed to make aspects of modding easier, in particular network syncing with clients.
+modId = "sekclib"
+version = "${file.jarVersion}"
+displayName = "SekC Lib"
+authors = "Sekwah"
+description = '''A library mod designed to make aspects of modding easier, in particular network syncing with clients.
 
 Other features and utilities are also included.'''
 
 [[dependencies.sekclib]]
-modId="neoforge"
-type="required"
-versionRange="[26.3,)"
-ordering="NONE"
-side="BOTH"
+modId = "neoforge"
+type = "required"
+versionRange = "[26.3,)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.sekclib]]
-modId="minecraft"
-type="required"
-versionRange="[26.3,26.4)"
-ordering="NONE"
-side="BOTH"
+modId = "minecraft"
+type = "required"
+versionRange = "[26.3,26.4)"
+ordering = "NONE"
+side = "BOTH"

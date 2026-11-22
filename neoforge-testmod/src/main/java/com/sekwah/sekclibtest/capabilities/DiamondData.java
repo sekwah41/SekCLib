@@ -7,8 +7,12 @@ public final class DiamondData implements IDiamondData {
     private boolean diamondMode;
 
     @Override
-    public boolean isDiamond() { return diamondMode; }
+    public boolean isDiamond() {
+        return diamondMode;
+    }
 
     @Override
-    public void setDiamond(boolean diamond) { this.diamondMode = diamond; }
+    public void setDiamond(boolean diamond) {
+        this.diamondMode = diamond;
+    }
 }

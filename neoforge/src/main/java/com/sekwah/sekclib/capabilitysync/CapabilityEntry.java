@@ -35,7 +35,7 @@ public class CapabilityEntry {
     }
 
     public void addSyncEntry(SyncEntry entry) {
-        if(!this.syncEntryHashMap.containsKey(entry.getName())) {
+        if (!this.syncEntryHashMap.containsKey(entry.getName())) {
             this.syncEntries.add(entry);
             this.syncEntryHashMap.put(entry.getName(), entry);
         }

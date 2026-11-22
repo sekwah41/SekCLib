@@ -2,14 +2,12 @@ package com.sekwah.sekclib.network.s2c;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-
 
 
 /**
@@ -21,7 +19,9 @@ public class ClientVelocityPacket implements CustomPacketPayload {
     public static final StreamCodec<RegistryFriendlyByteBuf, ClientVelocityPacket> STREAM_CODEC = StreamCodec.of((buf, packet) -> encode(packet, buf), ClientVelocityPacket::decode);
 
     @Override
-    public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
 
     private final int xa;
     private final int ya;
@@ -38,9 +38,9 @@ public class ClientVelocityPacket implements CustomPacketPayload {
         double d1 = Mth.clamp(velocity.x, -maxVelocity, maxVelocity);
         double d2 = Mth.clamp(velocity.y, -maxVelocity, maxVelocity);
         double d3 = Mth.clamp(velocity.z, -maxVelocity, maxVelocity);
-        this.xa = (int)(d1 * 8000.0D);
-        this.ya = (int)(d2 * 8000.0D);
-        this.za = (int)(d3 * 8000.0D);
+        this.xa = (int) (d1 * 8000.0D);
+        this.ya = (int) (d2 * 8000.0D);
+        this.za = (int) (d3 * 8000.0D);
     }
 
     public static void encode(ClientVelocityPacket msg, RegistryFriendlyByteBuf outBuffer) {
@@ -58,13 +58,13 @@ public class ClientVelocityPacket implements CustomPacketPayload {
 
     public static class Handler {
         public static void handle(ClientVelocityPacket msg, IPayloadContext ctx) {
-                LocalPlayer player = Minecraft.getInstance().player;
-                if(player != null) {
-                    if(msg.ya > 0) {
-                        player.setOnGround(false);
-                    }
-                    player.setDeltaMovement(new Vec3(msg.xa / 8000.0D, msg.ya / 8000.0D, msg.za / 8000.0D));
+            LocalPlayer player = Minecraft.getInstance().player;
+            if (player != null) {
+                if (msg.ya > 0) {
+                    player.setOnGround(false);
                 }
+                player.setDeltaMovement(new Vec3(msg.xa / 8000.0D, msg.ya / 8000.0D, msg.za / 8000.0D));
+            }
 
         }
     }

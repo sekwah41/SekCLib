@@ -25,8 +25,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        loader: [neoforge, fabric]
-        release-task: [curseforge, discordupload, modrinth, publish]
+        loader: [ neoforge, fabric ]
+        release-task: [ curseforge, discordupload, modrinth, publish ]
     needs: release-please
     runs-on: ubuntu-latest
     if: ${{ needs.release-please.outputs.release_created }}

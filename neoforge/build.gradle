@@ -18,8 +18,8 @@ java {
     withSourcesJar()
 }
 
-sourceSets.main.java.srcDirs = [rootProject.file('common-neoforge/src/main/java'), rootProject.file('neoforge/src/main/java')]
-sourceSets.main.resources.srcDirs = [rootProject.file('common-neoforge/src/main/resources'), rootProject.file('neoforge/src/main/resources')]
+sourceSets.main.java.srcDirs = [rootProject.file('common/src/main/java'), rootProject.file('neoforge/src/main/java')]
+sourceSets.main.resources.srcDirs = [rootProject.file('common/src/main/resources'), rootProject.file('neoforge/src/main/resources')]
 
 neoForge {
     version = "${rootProject.neoforge_version}"

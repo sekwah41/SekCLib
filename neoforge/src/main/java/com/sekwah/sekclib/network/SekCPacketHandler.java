@@ -7,7 +7,8 @@ import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public final class SekCPacketHandler {
-    private SekCPacketHandler() {}
+    private SekCPacketHandler() {
+    }
 
     public static void sendToPlayer(Object packet, ServerPlayer player) {
         PacketDistributor.sendToPlayer(player, (net.minecraft.network.protocol.common.custom.CustomPacketPayload) packet);

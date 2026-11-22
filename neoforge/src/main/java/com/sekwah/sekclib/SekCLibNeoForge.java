@@ -1,17 +1,16 @@
 package com.sekwah.sekclib;
 
+import com.sekwah.sekclib.capabilitysync.capability.SyncDataCapabilityHandler;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterCapabilitySyncEvent;
 import com.sekwah.sekclib.capabilitysync.capabilitysync.RegisterSyncTrackerTypeEvent;
+import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.implemented.BaseSyncTrackers;
 import com.sekwah.sekclib.common.SekCLibCommon;
 import com.sekwah.sekclib.network.SekCPacketHandler;
-import com.sekwah.sekclib.capabilitysync.capability.SyncDataCapabilityHandler;
-import com.sekwah.sekclib.capabilitysync.capabilitysync.tracker.implemented.BaseSyncTrackers;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-
+import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,7 +44,6 @@ public class SekCLibNeoForge {
         SekCLibNeoForge.postModEvent(new RegisterSyncTrackerTypeEvent());
         SekCLibNeoForge.postModEvent(new RegisterCapabilitySyncEvent());
     }
-
 
 
     private static void postModEvent(net.neoforged.bus.api.Event event) {

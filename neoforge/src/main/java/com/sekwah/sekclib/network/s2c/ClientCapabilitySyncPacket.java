@@ -11,13 +11,12 @@ import com.sekwah.sekclib.registries.SekCLibRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.Identifier;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.ArrayList;
@@ -41,7 +40,9 @@ public class ClientCapabilitySyncPacket implements CustomPacketPayload {
     public static final StreamCodec<RegistryFriendlyByteBuf, ClientCapabilitySyncPacket> STREAM_CODEC = StreamCodec.of((buf, packet) -> encode(packet, buf), ClientCapabilitySyncPacket::decode);
 
     @Override
-    public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
 
     private final int entityId;
     public List<CapabilityInfo> capabilityData;
@@ -72,7 +73,7 @@ public class ClientCapabilitySyncPacket implements CustomPacketPayload {
         for (ISyncTrackerData tracker : trackers) {
             outBuffer.writeByte(tracker.getSyncEntry().getTrackerId());
             outBuffer.writeBoolean(tracker.getSendValue() != null);
-            if(tracker.getSendValue() != null) {
+            if (tracker.getSendValue() != null) {
                 tracker.getSyncEntry().getSerializer().encode(tracker.getSendValue(), outBuffer);
             }
         }

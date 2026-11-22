@@ -20,6 +20,10 @@ repositories {
         name = 'TerraformersMC'
         url = 'https://maven.terraformersmc.com/releases'
     }
+    maven {
+        name = 'Ladysnake'
+        url = 'https://maven.ladysnake.org/releases'
+    }
 }
 
 cloche {

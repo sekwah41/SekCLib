@@ -1,9 +1,11 @@
 package com.sekwah.sekclibtest.capabilities;
 
 import com.sekwah.sekclibtest.SekCLibTest;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.capabilities.EntityCapability;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
@@ -24,12 +26,14 @@ public final class CapabilityHandler {
     }
 
     private static <E extends Entity> void registerEntityCapability(RegisterCapabilitiesEvent event) {
-        var zombie = BuiltInRegistries.ENTITY_TYPE.get(Identifier.fromNamespaceAndPath("minecraft", "zombie")).orElseThrow().value();
-        registerForType(event, zombie);
+        for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
+            registerForType(event, entityType);
+        }
     }
 
-    private static <E extends Entity> void registerForType(RegisterCapabilitiesEvent event, net.minecraft.world.entity.EntityType<E> entityType) {
-        event.registerEntity(DIAMOND_DATA, entityType, (entity, context) -> getOrCreate(entity));
+    private static <E extends Entity> void registerForType(RegisterCapabilitiesEvent event, EntityType<E> entityType) {
+        event.registerEntity(DIAMOND_DATA, entityType, (entity, context) ->
+                entity instanceof LivingEntity ? getOrCreate(entity) : null);
     }
 
     private static synchronized DiamondData getOrCreate(Entity entity) {
